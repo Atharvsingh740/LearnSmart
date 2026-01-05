@@ -1,0 +1,29 @@
+{
+  "app_name": "लर्नस्मार्ट",
+  "onboarding": {
+    "welcome": "लर्नस्मार्ट में आपका स्वागत है",
+    "select_class": "अपनी कक्षा चुनें",
+    "select_stream": "अपनी धारा चुनें",
+    "get_started": "शुरू करें"
+  },
+  "home": {
+    "lessons": "पाठ",
+    "quizzes": "प्रश्नोत्तरी",
+    "profile": "प्रोफ़ाइल",
+    "explore": "अन्वेषण करें"
+  },
+  "profile": {
+    "xp": "अनुभव अंक",
+    "smart_coins": "स्मार्ट सिक्के",
+    "streak": "दिन की लकीर",
+    "completed_lessons": "पूर्ण पाठ"
+  },
+  "common": {
+    "loading": "लोड हो रहा है...",
+    "error": "त्रुटि",
+    "retry": "पुन: प्रयास करें",
+    "cancel": "रद्द करें",
+    "save": "सहेजें",
+    "continue": "जारी रखें"
+  }
+}
