@@ -12,6 +12,7 @@
     "@react-native-camera-roll/camera-roll": "^7.10.2",
     "@react-navigation/bottom-tabs": "^7.4.0",
     "@react-navigation/native": "^7.1.8",
+    "@shopify/flash-list": "^2.2.0",
     "expo": "~54.0.30",
     "expo-blur": "^15.0.8",
     "expo-build-properties": "^1.0.10",
@@ -36,7 +37,10 @@
   },
   "expo": {
     "install": {
-      "exclude": ["@react-navigation/bottom-tabs", "@react-navigation/native"]
+      "exclude": [
+        "@react-navigation/bottom-tabs",
+        "@react-navigation/native"
+      ]
     }
   },
   "private": true

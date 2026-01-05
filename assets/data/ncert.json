@@ -1,0 +1,1122 @@
+{
+  "classes": [
+    {
+      "id": "1",
+      "name": "Class 1",
+      "subjects": [
+        {
+          "id": "eng-1",
+          "name": "English",
+          "chapters": [
+            {
+              "id": "ch-1-eng-1",
+              "title": "My Family",
+              "icon": "👨‍👩‍👧",
+              "topics": [
+                {
+                  "id": "topic-1-eng-1",
+                  "title": "Who are in your family?",
+                  "icon": "👨‍👩‍👧‍👦",
+                  "concepts": [
+                    {
+                      "id": "concept-1-eng-1",
+                      "title": "Family Members",
+                      "content": "A family is a group of people who live together and care for each other. Family members include parents, siblings, and relatives.",
+                      "bullets": [
+                        "Father - protects and provides",
+                        "Mother - nurtures and cares",
+                        "Siblings - brothers and sisters",
+                        "Grandparents - oldest members"
+                      ],
+                      "keyTakeaway": "A family is a group of people who love and support each other.",
+                      "diagram": {
+                        "type": "svg",
+                        "elements": [
+                          { "label": "Father", "icon": "👨" },
+                          { "label": "Mother", "icon": "👩" },
+                          { "label": "Child", "icon": "👧" }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "math-1",
+          "name": "Mathematics",
+          "chapters": [
+            {
+              "id": "ch-1-math-1",
+              "title": "Numbers 1 to 9",
+              "icon": "🔢",
+              "topics": [
+                {
+                  "id": "topic-1-math-1",
+                  "title": "Learning Numbers",
+                  "icon": "1️⃣",
+                  "concepts": [
+                    {
+                      "id": "concept-1-math-1",
+                      "title": "Numbers 1 to 5",
+                      "content": "Numbers help us count things around us. We use numbers every day to understand how many items we have.",
+                      "bullets": [
+                        "1 - One - one apple",
+                        "2 - Two - two birds",
+                        "3 - Three - three flowers",
+                        "4 - Four - four books",
+                        "5 - Five - five fingers"
+                      ],
+                      "keyTakeaway": "Numbers help us count and understand quantities.",
+                      "diagram": {
+                        "type": "svg",
+                        "elements": [
+                          { "label": "1", "icon": "🍎" },
+                          { "label": "2", "icon": "🐦" },
+                          { "label": "3", "icon": "🌸" },
+                          { "label": "4", "icon": "📚" },
+                          { "label": "5", "icon": "✋" }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Class 2",
+      "subjects": [
+        {
+          "id": "eng-2",
+          "name": "English",
+          "chapters": [
+            {
+              "id": "ch-1-eng-2",
+              "title": "Good Morning",
+              "icon": "🌅",
+              "topics": [
+                {
+                  "id": "topic-1-eng-2",
+                  "title": "Greetings",
+                  "icon": "👋",
+                  "concepts": [
+                    {
+                      "id": "concept-1-eng-2",
+                      "title": "Polite Words",
+                      "content": "Using polite words makes everyone happy. We should say please, thank you, and sorry when needed.",
+                      "bullets": [
+                        "Please - for asking something",
+                        "Thank you - for receiving help",
+                        "Sorry - when we make a mistake",
+                        "Excuse me - to get attention politely"
+                      ],
+                      "keyTakeaway": "Polite words help us communicate respectfully with others.",
+                      "diagram": {
+                        "type": "svg",
+                        "elements": [
+                          { "label": "Please", "icon": "🙏" },
+                          { "label": "Thank You", "icon": "❤️" },
+                          { "label": "Sorry", "icon": "😔" }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "math-2",
+          "name": "Mathematics",
+          "chapters": [
+            {
+              "id": "ch-1-math-2",
+              "title": "Numbers 1 to 100",
+              "icon": "🔢",
+              "topics": [
+                {
+                  "id": "topic-1-math-2",
+                  "title": "Counting Forward",
+                  "icon": "➡️",
+                  "concepts": [
+                    {
+                      "id": "concept-1-math-2",
+                      "title": "Number Sequence",
+                      "content": "Numbers follow a special order. Each number is one more than the number before it.",
+                      "bullets": [
+                        "After 10 comes 11, then 12",
+                        "After 20 comes 21, then 22",
+                        "After 50 comes 51, then 52",
+                        "After 99 comes 100 - a hundred!"
+                      ],
+                      "keyTakeaway": "Numbers increase by one as we count forward.",
+                      "diagram": {
+                        "type": "svg",
+                        "elements": [
+                          { "label": "10", "icon": "🔟" },
+                          { "label": "11", "icon": "1️⃣1️⃣" },
+                          { "label": "12", "icon": "1️⃣2️⃣" }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "name": "Class 3",
+      "subjects": [
+        {
+          "id": "eng-3",
+          "name": "English",
+          "chapters": [
+            {
+              "id": "ch-1-eng-3",
+              "title": "The Magic Garden",
+              "icon": "🌷",
+              "topics": [
+                {
+                  "id": "topic-1-eng-3",
+                  "title": "Plants and Flowers",
+                  "icon": "🌸",
+                  "concepts": [
+                    {
+                      "id": "concept-1-eng-3",
+                      "title": "Parts of a Plant",
+                      "content": "Plants have different parts that help them grow. Each part has a special job to do.",
+                      "bullets": [
+                        "Roots - absorb water from soil",
+                        "Stem - carries water to leaves",
+                        "Leaves - make food using sunlight",
+                        "Flower - makes seeds for new plants"
+                      ],
+                      "keyTakeaway": "Each part of a plant has an important role in helping it survive and grow.",
+                      "diagram": {
+                        "type": "svg",
+                        "elements": [
+                          { "label": "Flower", "icon": "🌺" },
+                          { "label": "Leaves", "icon": "🍃" },
+                          { "label": "Stem", "icon": "🟢" },
+                          { "label": "Roots", "icon": "🟤" }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "math-3",
+          "name": "Mathematics",
+          "chapters": [
+            {
+              "id": "ch-1-math-3",
+              "title": "Addition",
+              "icon": "➕",
+              "topics": [
+                {
+                  "id": "topic-1-math-3",
+                  "title": "Adding Numbers",
+                  "icon": "🔢",
+                  "concepts": [
+                    {
+                      "id": "concept-1-math-3",
+                      "title": "What is Addition?",
+                      "content": "Addition means putting numbers together to find the total. We use the plus sign (+) and equals sign (=).",
+                      "bullets": [
+                        "2 + 3 = 5 (two plus three equals five)",
+                        "10 + 5 = 15 (ten plus five equals fifteen)",
+                        "We can add in any order",
+                        "Adding zero doesn't change the number"
+                      ],
+                      "keyTakeaway": "Addition combines numbers to find how many there are in total.",
+                      "diagram": {
+                        "type": "svg",
+                        "elements": [
+                          { "label": "2", "icon": "🍎🍎" },
+                          { "label": "+", "icon": "➕" },
+                          { "label": "3", "icon": "🍎🍎🍎" },
+                          { "label": "=", "icon": "=" },
+                          { "label": "5", "icon": "🍎🍎🍎🍎🍎" }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "evs-3",
+          "name": "EVS",
+          "chapters": [
+            {
+              "id": "ch-1-evs-3",
+              "title": "My Family and Friends",
+              "icon": "👨‍👩‍👧",
+              "topics": [
+                {
+                  "id": "topic-1-evs-3",
+                  "title": "Relationships",
+                  "icon": "❤️",
+                  "concepts": [
+                    {
+                      "id": "concept-1-evs-3",
+                      "title": "Family Relationships",
+                      "content": "In a family, each person has a special relationship. Understanding relationships helps us know our family better.",
+                      "bullets": [
+                        "Parents are mother and father",
+                        "Siblings are brothers and sisters",
+                        "Grandparents are parents of parents",
+                        "Cousins are children of aunts and uncles"
+                      ],
+                      "keyTakeaway": "Family relationships connect us to each other.",
+                      "diagram": {
+                        "type": "svg",
+                        "elements": [
+                          { "label": "Grandfather", "icon": "👴" },
+                          { "label": "Grandmother", "icon": "👵" },
+                          { "label": "Father", "icon": "👨" },
+                          { "label": "Mother", "icon": "👩" },
+                          { "label": "Child", "icon": "👧" }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "name": "Class 4",
+      "subjects": [
+        {
+          "id": "eng-4",
+          "name": "English",
+          "chapters": [
+            {
+              "id": "ch-1-eng-4",
+              "title": "Neha's Alarm Clock",
+              "icon": "⏰",
+              "topics": [
+                {
+                  "id": "topic-1-eng-4",
+                  "title": "Telling Time",
+                  "icon": "🕐",
+                  "concepts": [
+                    {
+                      "id": "concept-1-eng-4",
+                      "title": "How We Tell Time",
+                      "content": "We use clocks to tell time. There are 24 hours in a day, 60 minutes in an hour, and 60 seconds in a minute.",
+                      "bullets": [
+                        "Hour hand shows the hour",
+                        "Minute hand shows minutes",
+                        "Short hand moves slower",
+                        "Long hand moves faster"
+                      ],
+                      "keyTakeaway": "Clocks help us organize our day by showing us the time.",
+                      "diagram": {
+                        "type": "svg",
+                        "elements": [
+                          { "label": "Hour Hand", "icon": "🕛" },
+                          { "label": "Minute Hand", "icon": "🕧" },
+                          { "label": "Second Hand", "icon": "🕒" }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "math-4",
+          "name": "Mathematics",
+          "chapters": [
+            {
+              "id": "ch-1-math-4",
+              "title": "Multiplication",
+              "icon": "✖️",
+              "topics": [
+                {
+                  "id": "topic-1-math-4",
+                  "title": "Multiplying Numbers",
+                  "icon": "🔢",
+                  "concepts": [
+                    {
+                      "id": "concept-1-math-4",
+                      "title": "What is Multiplication?",
+                      "content": "Multiplication is repeated addition. It helps us find the total quickly when we have equal groups.",
+                      "bullets": [
+                        "3 × 4 = 12 (three groups of four)",
+                        "Multiplication is fast addition",
+                        "We can multiply in any order",
+                        "Multiplying by 1 gives the same number"
+                      ],
+                      "keyTakeaway": "Multiplication helps us find totals of equal groups quickly.",
+                      "diagram": {
+                        "type": "svg",
+                        "elements": [
+                          { "label": "3", "icon": "⭐⭐⭐" },
+                          { "label": "×", "icon": "✖️" },
+                          { "label": "4", "icon": "⭐⭐⭐⭐" },
+                          { "label": "=", "icon": "=" },
+                          { "label": "12", "icon": "⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐" }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "name": "Class 5",
+      "subjects": [
+        {
+          "id": "eng-5",
+          "name": "English",
+          "chapters": [
+            {
+              "id": "ch-1-eng-5",
+              "title": "Mangoes for the Summer",
+              "icon": "🥭",
+              "topics": [
+                {
+                  "id": "topic-1-eng-5",
+                  "title": "Fruits and Seasons",
+                  "icon": "🍎",
+                  "concepts": [
+                    {
+                      "id": "concept-1-eng-5",
+                      "title": "Seasonal Fruits",
+                      "content": "Different fruits grow in different seasons. Knowing when fruits are in season helps us eat fresh and healthy food.",
+                      "bullets": [
+                        "Mangoes - summer (June-July)",
+                        "Apples - winter (November-January)",
+                        "Oranges - winter (December-February)",
+                        "Bananas - available all year"
+                      ],
+                      "keyTakeaway": "Seasonal fruits are fresh, tasty, and good for our health.",
+                      "diagram": {
+                        "type": "svg",
+                        "elements": [
+                          { "label": "Summer", "icon": "☀️" },
+                          { "label": "Mango", "icon": "🥭" },
+                          { "label": "Winter", "icon": "❄️" },
+                          { "label": "Apple", "icon": "🍎" }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "math-5",
+          "name": "Mathematics",
+          "chapters": [
+            {
+              "id": "ch-1-math-5",
+              "title": "Fractions",
+              "icon": "½",
+              "topics": [
+                {
+                  "id": "topic-1-math-5",
+                  "title": "Understanding Fractions",
+                  "icon": "🍰",
+                  "concepts": [
+                    {
+                      "id": "concept-1-math-5",
+                      "title": "What is a Fraction?",
+                      "content": "A fraction represents part of a whole. It has a numerator (top number) and denominator (bottom number).",
+                      "bullets": [
+                        "1/2 means one of two equal parts",
+                        "1/4 means one of four equal parts",
+                        "Numerator shows how many parts we have",
+                        "Denominator shows total parts in a whole"
+                      ],
+                      "keyTakeaway": "Fractions help us represent and work with parts of a whole.",
+                      "diagram": {
+                        "type": "svg",
+                        "elements": [
+                          { "label": "Whole", "icon": "⬜" },
+                          { "label": "Half", "icon": "▯" },
+                          { "label": "Quarter", "icon": "▤" }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "name": "Class 6",
+      "subjects": [
+        {
+          "id": "eng-6",
+          "name": "English",
+          "chapters": [
+            {
+              "id": "ch-1-eng-6",
+              "title": "Who Did Patrick's Homework?",
+              "icon": "📚",
+              "topics": [
+                {
+                  "id": "topic-1-eng-6",
+                  "title": "The Importance of Homework",
+                  "icon": "✏️",
+                  "concepts": [
+                    {
+                      "id": "concept-1-eng-6",
+                      "title": "Learning Through Practice",
+                      "content": "Homework helps us practice what we learn in school. It builds discipline and improves understanding.",
+                      "bullets": [
+                        "Practice makes learning permanent",
+                        "Homework teaches time management",
+                        "It helps identify areas needing improvement",
+                        "Regular practice builds confidence"
+                      ],
+                      "keyTakeaway": "Homework strengthens learning through consistent practice.",
+                      "diagram": {
+                        "type": "svg",
+                        "elements": [
+                          { "label": "Learn", "icon": "📖" },
+                          { "label": "Practice", "icon": "✏️" },
+                          { "label": "Improve", "icon": "📈" }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "math-6",
+          "name": "Mathematics",
+          "chapters": [
+            {
+              "id": "ch-1-math-6",
+              "title": "Knowing Our Numbers",
+              "icon": "🔢",
+              "topics": [
+                {
+                  "id": "topic-1-math-6",
+                  "title": "Place Value",
+                  "icon": "🏠",
+                  "concepts": [
+                    {
+                      "id": "concept-1-math-6",
+                      "title": "Understanding Place Value",
+                      "content": "Place value tells us the value of each digit in a number based on its position.",
+                      "bullets": [
+                        "Units - ones place (rightmost)",
+                        "Tens - tens place",
+                        "Hundreds - hundreds place",
+                        "Thousands - thousands place"
+                      ],
+                      "keyTakeaway": "Place value helps us understand the true value of each digit in a number.",
+                      "diagram": {
+                        "type": "svg",
+                        "elements": [
+                          { "label": "Thousands", "icon": "1️⃣0️⃣0️⃣0️⃣" },
+                          { "label": "Hundreds", "icon": "1️⃣0️⃣0️⃣" },
+                          { "label": "Tens", "icon": "1️⃣0️⃣" },
+                          { "label": "Ones", "icon": "1️⃣" }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "science-6",
+          "name": "Science",
+          "chapters": [
+            {
+              "id": "ch-1-sci-6",
+              "title": "Food: Where Does It Come From?",
+              "icon": "🍎",
+              "topics": [
+                {
+                  "id": "topic-1-sci-6",
+                  "title": "Sources of Food",
+                  "icon": "🌾",
+                  "concepts": [
+                    {
+                      "id": "concept-1-sci-6",
+                      "title": "Plant and Animal Sources",
+                      "content": "We get food from both plants and animals. Plants are producers that make their own food using sunlight.",
+                      "bullets": [
+                        "Plants - vegetables, fruits, grains",
+                        "Animals - milk, meat, eggs",
+                        "Some foods come from both sources",
+                        "Food provides energy and nutrients"
+                      ],
+                      "keyTakeaway": "Food comes from plants and animals, providing us with essential nutrients.",
+                      "diagram": {
+                        "type": "svg",
+                        "elements": [
+                          { "label": "Plants", "icon": "🌱" },
+                          { "label": "Animals", "icon": "🐄" },
+                          { "label": "Food", "icon": "🍽️" }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "7",
+      "name": "Class 7",
+      "subjects": [
+        {
+          "id": "eng-7",
+          "name": "English",
+          "chapters": [
+            {
+              "id": "ch-1-eng-7",
+              "title": "The Three Questions",
+              "icon": "❓",
+              "topics": [
+                {
+                  "id": "topic-1-eng-7",
+                  "title": "Asking Questions",
+                  "icon": "🔍",
+                  "concepts": [
+                    {
+                      "id": "concept-1-eng-7",
+                      "title": "The Power of Questions",
+                      "content": "Asking the right questions helps us understand things better. Questions lead to discovery and learning.",
+                      "bullets": [
+                        "Questions clarify doubts",
+                        "They show curiosity",
+                        "Good questions lead to solutions",
+                        "Asking is the first step to knowing"
+                      ],
+                      "keyTakeaway": "Asking thoughtful questions is key to learning and understanding.",
+                      "diagram": {
+                        "type": "svg",
+                        "elements": [
+                          { "label": "Question", "icon": "❓" },
+                          { "label": "Search", "icon": "🔎" },
+                          { "label": "Answer", "icon": "✅" }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "math-7",
+          "name": "Mathematics",
+          "chapters": [
+            {
+              "id": "ch-1-math-7",
+              "title": "Integers",
+              "icon": "➕➖",
+              "topics": [
+                {
+                  "id": "topic-1-math-7",
+                  "title": "Understanding Integers",
+                  "icon": "📊",
+                  "concepts": [
+                    {
+                      "id": "concept-1-math-7",
+                      "title": "Positive and Negative Numbers",
+                      "content": "Integers include all whole numbers, both positive and negative, plus zero. They can be represented on a number line.",
+                      "bullets": [
+                        "Positive numbers are greater than zero",
+                        "Negative numbers are less than zero",
+                        "Zero is neither positive nor negative",
+                        "The number line shows integers in order"
+                      ],
+                      "keyTakeaway": "Integers include all whole numbers, positive, negative, and zero.",
+                      "diagram": {
+                        "type": "svg",
+                        "elements": [
+                          { "label": "-3", "icon": "⬅️" },
+                          { "label": "-2", "icon": "⬅️" },
+                          { "label": "-1", "icon": "⬅️" },
+                          { "label": "0", "icon": "⚪" },
+                          { "label": "+1", "icon": "➡️" },
+                          { "label": "+2", "icon": "➡️" },
+                          { "label": "+3", "icon": "➡️" }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "8",
+      "name": "Class 8",
+      "subjects": [
+        {
+          "id": "eng-8",
+          "name": "English",
+          "chapters": [
+            {
+              "id": "ch-1-eng-8",
+              "title": "The Best Advice I Ever Had",
+              "icon": "💡",
+              "topics": [
+                {
+                  "id": "topic-1-eng-8",
+                  "title": "Learning from Advice",
+                  "icon": "🤔",
+                  "concepts": [
+                    {
+                      "id": "concept-1-eng-8",
+                      "title": "Valuable Advice",
+                      "content": "Good advice helps us make better decisions. Listening to experienced people can guide us in life.",
+                      "bullets": [
+                        "Advice comes from experience",
+                        "We should consider advice carefully",
+                        "Not all advice works for everyone",
+                        "Good advice is honest and helpful"
+                      ],
+                      "keyTakeaway": "Wise advice helps us make better life choices.",
+                      "diagram": {
+                        "type": "svg",
+                        "elements": [
+                          { "label": "Experience", "icon": "🧓" },
+                          { "label": "Advice", "icon": "💬" },
+                          { "label": "Wisdom", "icon": "🌟" }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "math-8",
+          "name": "Mathematics",
+          "chapters": [
+            {
+              "id": "ch-1-math-8",
+              "title": "Rational Numbers",
+              "icon": "📐",
+              "topics": [
+                {
+                  "id": "topic-1-math-8",
+                  "title": "Understanding Rational Numbers",
+                  "icon": "🔢",
+                  "concepts": [
+                    {
+                      "id": "concept-1-math-8",
+                      "title": "What are Rational Numbers?",
+                      "content": "Rational numbers are numbers that can be expressed as a fraction where the numerator and denominator are integers.",
+                      "bullets": [
+                        "Rational numbers can be written as p/q",
+                        "Denominator cannot be zero",
+                        "Fractions and decimals are rational",
+                        "Integers are also rational numbers"
+                      ],
+                      "keyTakeaway": "Rational numbers are fractions of integers where the denominator is not zero.",
+                      "diagram": {
+                        "type": "svg",
+                        "elements": [
+                          { "label": "1/2", "icon": "½" },
+                          { "label": "3/4", "icon": "¾" },
+                          { "label": "5/1", "icon": "5" },
+                          { "label": "-2/3", "icon": "-⅔" }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "9",
+      "name": "Class 9",
+      "subjects": [
+        {
+          "id": "english-9",
+          "name": "English",
+          "chapters": [
+            {
+              "id": "ch-1-eng-9",
+              "title": "The Fun They Had",
+              "icon": "📖",
+              "topics": [
+                {
+                  "id": "topic-1-eng-9",
+                  "title": "Education in the Future",
+                  "icon": "🔮",
+                  "concepts": [
+                    {
+                      "id": "concept-1-eng-9",
+                      "title": "Technology in Education",
+                      "content": "Technology is changing how we learn. Virtual classrooms and online resources make education accessible to everyone.",
+                      "bullets": [
+                        "Online learning platforms exist everywhere",
+                        "AI tutors provide personalized help",
+                        "Digital books replace physical ones",
+                        "Learning happens anywhere, anytime"
+                      ],
+                      "keyTakeaway": "Technology transforms education, making it more accessible and personalized.",
+                      "diagram": {
+                        "type": "svg",
+                        "elements": [
+                          { "label": "Computer", "icon": "💻" },
+                          { "label": "Internet", "icon": "🌐" },
+                          { "label": "Knowledge", "icon": "📚" }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "math-9",
+          "name": "Mathematics",
+          "chapters": [
+            {
+              "id": "ch-1-math-9",
+              "title": "Number System",
+              "icon": "🔢",
+              "topics": [
+                {
+                  "id": "topic-1-math-9",
+                  "title": "Types of Numbers",
+                  "icon": "📊",
+                  "concepts": [
+                    {
+                      "id": "concept-1-math-9",
+                      "title": "Number Systems",
+                      "content": "The number system includes natural numbers, whole numbers, integers, rational numbers, and irrational numbers.",
+                      "bullets": [
+                        "Natural numbers: 1, 2, 3, ...",
+                        "Whole numbers: 0, 1, 2, 3, ...",
+                        "Integers: ..., -2, -1, 0, 1, 2, ...",
+                        "Rational numbers: fractions of integers"
+                      ],
+                      "keyTakeaway": "Different types of numbers form the foundation of mathematics.",
+                      "diagram": {
+                        "type": "svg",
+                        "elements": [
+                          { "label": "Natural", "icon": "🌿" },
+                          { "label": "Whole", "icon": "⭕" },
+                          { "label": "Integer", "icon": "➕" },
+                          { "label": "Rational", "icon": "📏" }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "physics-9",
+          "name": "Physics",
+          "chapters": [
+            {
+              "id": "ch-1-phys-9",
+              "title": "Motion",
+              "icon": "🚗",
+              "topics": [
+                {
+                  "id": "topic-1-phys-9",
+                  "title": "What is Motion?",
+                  "icon": "🏃",
+                  "concepts": [
+                    {
+                      "id": "concept-1-phys-9",
+                      "title": "Speed and Velocity",
+                      "content": "Speed is the distance traveled per unit time. Velocity is speed in a specific direction.",
+                      "bullets": [
+                        "Speed = Distance / Time",
+                        "Velocity has direction",
+                        "Measured in m/s",
+                        "Average vs Instantaneous speed"
+                      ],
+                      "keyTakeaway": "Velocity is speed with a specific direction.",
+                      "diagram": {
+                        "type": "svg",
+                        "elements": [
+                          { "label": "Start", "icon": "🏁" },
+                          { "label": "Distance", "icon": "📏" },
+                          { "label": "End", "icon": "🏆" }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "chemistry-9",
+          "name": "Chemistry",
+          "chapters": [
+            {
+              "id": "ch-1-chem-9",
+              "title": "Matter in Our Surroundings",
+              "icon": "🧪",
+              "topics": [
+                {
+                  "id": "topic-1-chem-9",
+                  "title": "States of Matter",
+                  "icon": "💧",
+                  "concepts": [
+                    {
+                      "id": "concept-1-chem-9",
+                      "title": "Three States of Matter",
+                      "content": "Matter exists in three main states: solid, liquid, and gas. Each has different properties.",
+                      "bullets": [
+                        "Solids - definite shape and volume",
+                        "Liquids - definite volume, no definite shape",
+                        "Gases - no definite shape or volume",
+                        "Matter can change states with heat"
+                      ],
+                      "keyTakeaway": "Matter exists in three states with different properties.",
+                      "diagram": {
+                        "type": "svg",
+                        "elements": [
+                          { "label": "Solid", "icon": "🧊" },
+                          { "label": "Liquid", "icon": "💧" },
+                          { "label": "Gas", "icon": "💨" }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "biology-9",
+          "name": "Biology",
+          "chapters": [
+            {
+              "id": "ch-1-bio-9",
+              "title": "The Fundamental Unit of Life",
+              "icon": "🔬",
+              "topics": [
+                {
+                  "id": "topic-1-bio-9",
+                  "title": "The Cell",
+                  "icon": "🫐",
+                  "concepts": [
+                    {
+                      "id": "concept-1-bio-9",
+                      "title": "Cell Structure",
+                      "content": "The cell is the basic unit of life. All living organisms are made of cells.",
+                      "bullets": [
+                        "Cell membrane - outer covering",
+                        "Nucleus - controls cell activities",
+                        "Cytoplasm - jelly-like substance",
+                        "Organelles - specialized parts"
+                      ],
+                      "keyTakeaway": "Cells are the fundamental building blocks of all living things.",
+                      "diagram": {
+                        "type": "svg",
+                        "elements": [
+                          { "label": "Nucleus", "icon": "⚫" },
+                          { "label": "Membrane", "icon": "⭕" },
+                          { "label": "Cytoplasm", "icon": "🟡" }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "10",
+      "name": "Class 10",
+      "subjects": [
+        {
+          "id": "english-10",
+          "name": "English",
+          "chapters": [
+            {
+              "id": "ch-1-eng-10",
+              "title": "A Letter to God",
+              "icon": "✉️",
+              "topics": [
+                {
+                  "id": "topic-1-eng-10",
+                  "title": "Faith and Hope",
+                  "icon": "🙏",
+                  "concepts": [
+                    {
+                      "id": "concept-1-eng-10",
+                      "title": "The Power of Faith",
+                      "content": "Faith gives us strength during difficult times. Believing in something greater than ourselves helps us face challenges.",
+                      "bullets": [
+                        "Faith provides inner strength",
+                        "It helps us hope for better",
+                        "Faith gives meaning to struggles",
+                        "Belief system shapes our perspective"
+                      ],
+                      "keyTakeaway": "Faith provides strength and hope during life's challenges.",
+                      "diagram": {
+                        "type": "svg",
+                        "elements": [
+                          { "label": "Faith", "icon": "🙏" },
+                          { "label": "Hope", "icon": "🌈" },
+                          { "label": "Strength", "icon": "💪" }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "math-10",
+          "name": "Mathematics",
+          "chapters": [
+            {
+              "id": "ch-1-math-10",
+              "title": "Real Numbers",
+              "icon": "∞",
+              "topics": [
+                {
+                  "id": "topic-1-math-10",
+                  "title": "Types of Real Numbers",
+                  "icon": "🔢",
+                  "concepts": [
+                    {
+                      "id": "concept-1-math-10",
+                      "title": "Rational vs Irrational",
+                      "content": "Real numbers include both rational and irrational numbers. Understanding their properties is fundamental to mathematics.",
+                      "bullets": [
+                        "Rational numbers terminate or repeat",
+                        "Irrational numbers don't terminate or repeat",
+                        "Pi (π) is irrational",
+                        "Square roots of non-perfect squares are irrational"
+                      ],
+                      "keyTakeaway": "Real numbers include rational and irrational numbers with different properties.",
+                      "diagram": {
+                        "type": "svg",
+                        "elements": [
+                          { "label": "Real Numbers", "icon": "📊" },
+                          { "label": "Rational", "icon": "✓" },
+                          { "label": "Irrational", "icon": "✗" }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "physics-10",
+          "name": "Physics",
+          "chapters": [
+            {
+              "id": "ch-1-phys-10",
+              "title": "Light - Reflection and Refraction",
+              "icon": "💡",
+              "topics": [
+                {
+                  "id": "topic-1-phys-10",
+                  "title": "Laws of Reflection",
+                  "icon": "🪞",
+                  "concepts": [
+                    {
+                      "id": "concept-1-phys-10",
+                      "title": "Reflection of Light",
+                      "content": "When light hits a surface, it bounces back. This is called reflection and follows specific laws.",
+                      "bullets": [
+                        "Angle of incidence equals angle of reflection",
+                        "Incident ray, reflected ray, and normal are coplanar",
+                        "Plane mirrors form virtual images",
+                        "Reflection allows us to see objects"
+                      ],
+                      "keyTakeaway": "Light reflection follows predictable laws that allow us to see mirrors and shiny surfaces.",
+                      "diagram": {
+                        "type": "svg",
+                        "elements": [
+                          { "label": "Incident Ray", "icon": "➡️" },
+                          { "label": "Normal", "icon": "📐" },
+                          { "label": "Reflected Ray", "icon": "⬅️" }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

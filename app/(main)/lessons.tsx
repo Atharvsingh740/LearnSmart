@@ -1,34 +1,371 @@
-import { View, Text, StyleSheet } from 'react-native';
-import { useTranslation } from 'react-i18next';
-import { COLORS, SPACING, TYPOGRAPHY } from '../../theme';
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  ScrollView,
+  Pressable,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
+import { useRouter } from 'expo-router';
+import { FlashList } from '@shopify/flash-list';
+import { useCurriculumStore } from '@/store/curriculumStore';
+import { useUserStore } from '@/store/userStore';
+import { COLORS, TYPOGRAPHY, SPACING, RADIUS, SHADOWS } from '@/theme';
 
-export default function Lessons() {
-  const { t } = useTranslation();
+interface Subject {
+  id: string;
+  name: string;
+  chapters: Array<{
+    id: string;
+    title: string;
+    icon: string;
+    topics: Array<{
+      id: string;
+      title: string;
+    }>;
+  }>;
+  subCategories?: Array<{
+    id: string;
+    name: string;
+  }>;
+}
+
+export default function LessonsScreen() {
+  const { class: userClass } = useUserStore();
+  const { getClassSubjects, getAllClasses } = useCurriculumStore();
+  const classes = getAllClasses();
+  
+  const [selectedClassId, setSelectedClassId] = useState(userClass || '6');
+  const [expandedSubjects, setExpandedSubjects] = useState<Record<string, boolean>>({});
+
+  const subjects = getClassSubjects(selectedClassId);
+  const selectedClass = classes.find(c => c.id === selectedClassId);
+
+  const toggleSubject = (subjectId: string) => {
+    setExpandedSubjects(prev => ({
+      ...prev,
+      [subjectId]: !prev[subjectId],
+    }));
+  };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{t('home.lessons')}</Text>
-      <Text style={styles.subtitle}>Phase 2+ will implement lessons screen</Text>
-    </View>
+    <ScrollView 
+      style={styles.container} 
+      showsVerticalScrollIndicator={false}
+      scrollEventThrottle={16}
+    >
+      <Text style={styles.title}>📚 Lessons</Text>
+      <Text style={styles.subtitle}>{selectedClass?.name || 'Select Class'}</Text>
+
+      {/* Class Selector */}
+      <View style={styles.classSelectorContainer}>
+        <Text style={styles.sectionTitle}>Select Class</Text>
+        <FlashList
+          data={classes}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              style={[
+                styles.classButton,
+                item.id === selectedClassId && styles.classButtonActive,
+              ]}
+              onPress={() => setSelectedClassId(item.id)}
+            >
+              <Text
+                style={[
+                  styles.classButtonText,
+                  item.id === selectedClassId && styles.classButtonTextActive,
+                ]}
+              >
+                {item.name}
+              </Text>
+            </TouchableOpacity>
+          )}
+          keyExtractor={(item) => item.id}
+          estimatedItemSize={50}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.classListContent}
+        />
+      </View>
+
+      {/* Subjects and Chapters */}
+      <View style={styles.subjectsContainer}>
+        {subjects.map((subject, subjectIdx) => (
+          <SubjectCard
+            key={subject.id}
+            subject={subject}
+            isExpanded={expandedSubjects[subject.id]}
+            onToggle={() => toggleSubject(subject.id)}
+            classId={selectedClassId}
+          />
+        ))}
+      </View>
+
+      {subjects.length === 0 && (
+        <View style={styles.emptyState}>
+          <Text style={styles.emptyStateText}>No subjects found for this class</Text>
+        </View>
+      )}
+
+      <View style={styles.bottomSpacing} />
+    </ScrollView>
   );
 }
+
+interface SubjectCardProps {
+  subject: Subject;
+  isExpanded: boolean;
+  onToggle: () => void;
+  classId: string;
+}
+
+const SubjectCard: React.FC<SubjectCardProps> = ({ subject, isExpanded, onToggle, classId }) => {
+  const { getChapters } = useCurriculumStore();
+  const chapters = getChapters(subject.id, classId);
+
+  return (
+    <View style={styles.subjectCard}>
+      <TouchableOpacity
+        style={styles.subjectHeader}
+        onPress={onToggle}
+        activeOpacity={0.7}
+      >
+        <Text style={styles.subjectTitle}>{subject.name}</Text>
+        <View style={styles.subjectHeaderRight}>
+          <Text style={styles.chapterCount}>{chapters.length} Chapters</Text>
+          <Text style={[styles.expandIcon, isExpanded && styles.expandedIcon]}>
+            ▼
+          </Text>
+        </View>
+      </TouchableOpacity>
+
+      {isExpanded && (
+        <View style={styles.chaptersContainer}>
+          {subject.subCategories && subject.subCategories.length > 0 ? (
+            // Render subcategories (e.g., Physics, Chemistry, Biology for Class 9+)
+            subject.subCategories.map(subCat => {
+              const subCatChapters = chapters.filter(c => 
+                c.subCategory === subCat.id
+              );
+              if (subCatChapters.length === 0) return null;
+              
+              return (
+                <View key={subCat.id} style={styles.subCategoryContainer}>
+                  <Text style={styles.subCategoryTitle}>{subCat.name}</Text>
+                  <View style={styles.chapterGrid}>
+                    {subCatChapters.map(chapter => (
+                      <ChapterButton key={chapter.id} chapter={chapter} />
+                    ))}
+                  </View>
+                </View>
+              );
+            })
+          ) : (
+            // Regular chapter grid
+            <View style={styles.chapterGrid}>
+              {chapters.map(chapter => (
+                <ChapterButton key={chapter.id} chapter={chapter} />
+              ))}
+            </View>
+          )}
+        </View>
+      )}
+    </View>
+  );
+};
+
+interface ChapterButtonProps {
+  chapter: {
+    id: string;
+    title: string;
+    icon: string;
+    topics: Array<{
+      id: string;
+      title: string;
+    }>;
+  };
+}
+
+const ChapterButton: React.FC<ChapterButtonProps> = ({ chapter }) => {
+  const router = useRouter();
+
+  return (
+    <Pressable
+      style={styles.chapterButton}
+      onPress={() => {
+        router.push(`/lessons/${chapter.id}`);
+      }}
+    >
+      <View style={styles.chapterIconContainer}>
+        <Text style={styles.chapterIcon}>{chapter.icon}</Text>
+      </View>
+      <Text style={styles.chapterTitle} numberOfLines={2}>
+        {chapter.title}
+      </Text>
+      <Text style={styles.topicCount}>
+        {chapter.topics.length} {chapter.topics.length === 1 ? 'topic' : 'topics'}
+      </Text>
+    </Pressable>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: SPACING.LG,
-    backgroundColor: COLORS.CREAM_BG,
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: COLORS.SAND_BG,
+    paddingTop: SPACING.MD,
   },
   title: {
     ...TYPOGRAPHY.TITLE,
-    color: COLORS.SAGE_PRIMARY,
-    marginBottom: SPACING.MD,
+    color: COLORS.CHARCOAL_TEXT,
+    marginBottom: SPACING.XS,
+    paddingHorizontal: SPACING.MD,
   },
   subtitle: {
     ...TYPOGRAPHY.BODY,
     color: COLORS.CHARCOAL_TEXT,
+    opacity: 0.7,
+    marginBottom: SPACING.LG,
+    paddingHorizontal: SPACING.MD,
+  },
+  classSelectorContainer: {
+    marginBottom: SPACING.LG,
+  },
+  sectionTitle: {
+    ...TYPOGRAPHY.BODY,
+    fontWeight: '600',
+    color: COLORS.CHARCOAL_TEXT,
+    marginBottom: SPACING.SM,
+    paddingHorizontal: SPACING.MD,
+  },
+  classListContent: {
+    paddingHorizontal: SPACING.MD,
+  },
+  classButton: {
+    backgroundColor: '#fff',
+    borderRadius: RADIUS.BUTTON,
+    paddingVertical: SPACING.SM,
+    paddingHorizontal: SPACING.MD,
+    marginRight: SPACING.SM,
+    ...SHADOWS.LIGHT,
+    borderWidth: 2,
+    borderColor: 'transparent',
+  },
+  classButtonActive: {
+    borderColor: COLORS.SAGE_PRIMARY,
+    backgroundColor: COLORS.SAGE_PRIMARY + '15',
+  },
+  classButtonText: {
+    ...TYPOGRAPHY.BODY,
+    color: COLORS.CHARCOAL_TEXT,
+    fontWeight: '600',
+  },
+  classButtonTextActive: {
+    color: COLORS.SAGE_PRIMARY,
+  },
+  subjectsContainer: {
+    paddingHorizontal: SPACING.MD,
+  },
+  subjectCard: {
+    backgroundColor: '#fff',
+    borderRadius: RADIUS.LARGE,
+    marginBottom: SPACING.MD,
+    overflow: 'hidden',
+    ...SHADOWS.LIGHT,
+  },
+  subjectHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: SPACING.MD,
+  },
+  subjectHeaderRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  subjectTitle: {
+    ...TYPOGRAPHY.HEADER,
+    color: COLORS.SAGE_PRIMARY,
+  },
+  chapterCount: {
+    ...TYPOGRAPHY.SMALL,
+    color: COLORS.CHARCOAL_TEXT,
+    opacity: 0.6,
+    marginRight: SPACING.SM,
+  },
+  expandIcon: {
+    fontSize: 12,
+    color: COLORS.CHARCOAL_TEXT,
+    opacity: 0.6,
+  },
+  expandedIcon: {
+    transform: [{ rotate: '180deg' }],
+  },
+  chaptersContainer: {
+    paddingHorizontal: SPACING.MD,
+    paddingBottom: SPACING.MD,
+    borderTopWidth: 1,
+    borderTopColor: COLORS.SAGE_PRIMARY + '20',
+  },
+  subCategoryContainer: {
+    marginTop: SPACING.MD,
+  },
+  subCategoryTitle: {
+    ...TYPOGRAPHY.BODY,
+    fontWeight: '600',
+    color: COLORS.FOREST_ACCENT,
+    marginBottom: SPACING.SM,
+  },
+  chapterGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  chapterButton: {
+    width: '48%',
+    backgroundColor: COLORS.SAND_BG,
+    borderRadius: RADIUS.MEDIUM,
+    padding: SPACING.MD,
+    alignItems: 'center',
+    marginBottom: SPACING.SM,
+    ...SHADOWS.LIGHT,
+  },
+  chapterIconContainer: {
+    width: 50,
+    height: 50,
+    backgroundColor: '#fff',
+    borderRadius: RADIUS.MEDIUM,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: SPACING.SM,
+  },
+  chapterIcon: {
+    fontSize: 28,
+  },
+  chapterTitle: {
+    ...TYPOGRAPHY.SMALL,
+    color: COLORS.CHARCOAL_TEXT,
     textAlign: 'center',
+    fontWeight: '500',
+    marginBottom: SPACING.XS,
+  },
+  topicCount: {
+    ...TYPOGRAPHY.SMALL,
+    color: COLORS.CHARCOAL_TEXT,
+    opacity: 0.6,
+    fontSize: 11,
+  },
+  emptyState: {
+    padding: SPACING.XL,
+    alignItems: 'center',
+  },
+  emptyStateText: {
+    ...TYPOGRAPHY.BODY,
+    color: COLORS.CHARCOAL_TEXT,
+    opacity: 0.6,
+  },
+  bottomSpacing: {
+    height: SPACING.XL,
   },
 });
