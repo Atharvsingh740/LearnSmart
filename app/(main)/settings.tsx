@@ -69,6 +69,12 @@ export default function SettingsScreen() {
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      <View style={styles.header}>
+        <Pressable style={styles.backButton} onPress={() => router.back()}>
+          <Text style={styles.backButtonText}>← Back</Text>
+        </Pressable>
+        <View style={styles.headerSpacer} />
+      </View>
       <Text style={styles.title}>Settings</Text>
 
       {/* Profile Info */}
@@ -186,6 +192,23 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.SAND_BG,
     paddingHorizontal: SPACING.MD,
     paddingTop: SPACING.MD,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingBottom: SPACING.MD,
+  },
+  backButton: {
+    padding: SPACING.SM,
+  },
+  backButtonText: {
+    ...TYPOGRAPHY.BODY,
+    color: COLORS.SAGE_PRIMARY,
+    fontWeight: '600',
+  },
+  headerSpacer: {
+    width: 50,
   },
   title: {
     ...TYPOGRAPHY.TITLE,

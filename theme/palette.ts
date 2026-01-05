@@ -35,6 +35,8 @@ export const SPACING = {
   MD: 16,
   LG: 24,
   XL: 32,
+  XXL: 48,
+  XXXL: 64,
 };
 
 export const RADIUS = {
