@@ -21,13 +21,8 @@ export const GRADIENTS = {
   TEXT_HEADER: [COLORS.CHARCOAL_TEXT, COLORS.FOREST_ACCENT],
 };
 
-export const TYPOGRAPHY = {
-  TITLE: { fontFamily: 'Poppins', fontSize: 32, fontWeight: '700' as const },
-  HEADER: { fontFamily: 'Poppins', fontSize: 24, fontWeight: '600' as const },
-  BODY: { fontFamily: 'Inter', fontSize: 16, fontWeight: '400' as const },
-  SMALL: { fontFamily: 'Inter', fontSize: 13, fontWeight: '400' as const },
-  KEY_TAKEAWAY: { fontFamily: 'Poppins', fontSize: 16, fontWeight: '500' as const },
-};
+// Typography is now in typography.ts
+export { TYPOGRAPHY } from './typography';
 
 export const SPACING = {
   XS: 4,
