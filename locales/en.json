@@ -18,6 +18,20 @@
     "streak": "Day Streak",
     "completed_lessons": "Completed Lessons"
   },
+  "settings": {
+    "profile": "Profile",
+    "privacy": "Privacy Policy",
+    "contact": "Contact Support",
+    "email": "learnsmartofficial24@gmail.com",
+    "clear_data": "Clear All Data",
+    "logout": "Logout"
+  },
+  "privacy_policy": {
+    "title": "Privacy Policy",
+    "data_safe": "Your Data is Safe",
+    "no_sharing": "No Third Party Sharing",
+    "why_data": "Why We Collect Data"
+  },
   "common": {
     "loading": "Loading...",
     "error": "Error",

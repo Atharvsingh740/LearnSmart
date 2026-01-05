@@ -18,6 +18,20 @@
     "streak": "दिन की लकीर",
     "completed_lessons": "पूर्ण पाठ"
   },
+  "settings": {
+    "profile": "प्रोफाइल",
+    "privacy": "गोपनीयता नीति",
+    "contact": "सहायता संपर्क करें",
+    "email": "learnsmartofficial24@gmail.com",
+    "clear_data": "सभी डेटा हटाएं",
+    "logout": "लॉगआउट"
+  },
+  "privacy_policy": {
+    "title": "गोपनीयता नीति",
+    "data_safe": "आपका डेटा सुरक्षित है",
+    "no_sharing": "कोई थर्ड पार्टी शेयरिंग नहीं",
+    "why_data": "हम डेटा क्यों एकत्र करते हैं"
+  },
   "common": {
     "loading": "लोड हो रहा है...",
     "error": "त्रुटि",
