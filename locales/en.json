@@ -1,0 +1,29 @@
+{
+  "app_name": "LearnSmart",
+  "onboarding": {
+    "welcome": "Welcome to LearnSmart",
+    "select_class": "Select Your Class",
+    "select_stream": "Select Your Stream",
+    "get_started": "Get Started"
+  },
+  "home": {
+    "lessons": "Lessons",
+    "quizzes": "Quizzes",
+    "profile": "Profile",
+    "explore": "Explore"
+  },
+  "profile": {
+    "xp": "XP",
+    "smart_coins": "Smart Coins",
+    "streak": "Day Streak",
+    "completed_lessons": "Completed Lessons"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "retry": "Retry",
+    "cancel": "Cancel",
+    "save": "Save",
+    "continue": "Continue"
+  }
+}
