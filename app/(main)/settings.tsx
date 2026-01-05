@@ -2,11 +2,15 @@ import React, { useState } from 'react';
 import { View, Text, ScrollView, Pressable, StyleSheet, Switch, Alert, Linking } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useUserStore } from '../../store/userStore';
+import { useSmartyPersonalityStore } from '../../store/smartyPersonalityStore';
+import { useSmartyStore } from '../../store/smartyStore';
 import { COLORS, TYPOGRAPHY, SPACING, RADIUS, SHADOWS } from '../../theme';
 
 export default function SettingsScreen() {
   const router = useRouter();
   const { name, class: userClass, stream, avatar, setUser } = useUserStore();
+  const smartyPersonality = useSmartyPersonalityStore();
+  const smartyStore = useSmartyStore();
   const [notifications, setNotifications] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
   const [dataSync, setDataSync] = useState(true);
@@ -104,6 +108,53 @@ export default function SettingsScreen() {
           value={dataSync}
           onToggle={setDataSync}
         />
+      </SettingSection>
+
+      {/* Smarty AI */}
+      <SettingSection title="🤖 Smarty AI">
+        <Text style={styles.sectionDescription}>Personality Preset</Text>
+        <View style={styles.presetRow}>
+          {(
+            [
+              { key: 'warm', label: 'Warm' },
+              { key: 'formal', label: 'Formal' },
+              { key: 'casual', label: 'Casual' },
+              { key: 'motivational', label: 'Coach' },
+            ] as const
+          ).map((preset) => {
+            const selected = smartyPersonality.currentSettings.tone === preset.key;
+            return (
+              <Pressable
+                key={preset.key}
+                onPress={() => smartyPersonality.loadPreset(preset.key)}
+                style={[styles.presetChip, selected && styles.presetChipSelected]}
+              >
+                <Text style={[styles.presetChipText, selected && styles.presetChipTextSelected]}>
+                  {preset.label}
+                </Text>
+              </Pressable>
+            );
+          })}
+        </View>
+
+        <Pressable
+          style={styles.dangerButton}
+          onPress={() => {
+            Alert.alert('Clear Smarty Chat?', 'This will delete your Smarty chat history on this device.', [
+              { text: 'Cancel' },
+              {
+                text: 'Clear',
+                style: 'destructive',
+                onPress: () => {
+                  smartyStore.clearChat();
+                  Alert.alert('Cleared', 'Smarty chat history has been cleared.');
+                },
+              },
+            ]);
+          }}
+        >
+          <Text style={styles.dangerButtonText}>Clear Smarty Chat</Text>
+        </Pressable>
       </SettingSection>
 
       {/* Privacy & Data */}
@@ -323,6 +374,32 @@ const styles = StyleSheet.create({
     paddingHorizontal: SPACING.MD,
     paddingTop: SPACING.MD,
     fontStyle: 'italic',
+  },
+  presetRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    paddingHorizontal: SPACING.MD,
+    paddingTop: SPACING.SM,
+    gap: SPACING.SM,
+  },
+  presetChip: {
+    paddingHorizontal: SPACING.MD,
+    paddingVertical: SPACING.SM,
+    borderRadius: RADIUS.BUTTON,
+    borderWidth: 2,
+    borderColor: COLORS.SAGE_PRIMARY,
+    backgroundColor: 'transparent',
+  },
+  presetChipSelected: {
+    backgroundColor: COLORS.SAGE_PRIMARY,
+  },
+  presetChipText: {
+    ...TYPOGRAPHY.BODY,
+    color: COLORS.SAGE_PRIMARY,
+    fontWeight: '600',
+  },
+  presetChipTextSelected: {
+    color: 'white',
   },
   footer: {
     height: SPACING.XL,
