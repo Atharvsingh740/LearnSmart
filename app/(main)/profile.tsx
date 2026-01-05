@@ -1,15 +1,26 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { useUserStore } from '../../store/userStore';
-import { COLORS, SPACING, TYPOGRAPHY } from '../../theme';
+import { COLORS, SPACING, TYPOGRAPHY, RADIUS, SHADOWS } from '../../theme';
 
 export default function Profile() {
+  const router = useRouter();
   const { t } = useTranslation();
   const { name, xp, smartCoins, streak, completedLessons } = useUserStore();
 
+  const handleSettingsPress = () => {
+    router.push('/(main)/settings');
+  };
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{t('home.profile')}</Text>
+      <View style={styles.header}>
+        <Text style={styles.title}>{t('home.profile')}</Text>
+        <Pressable style={styles.settingsButton} onPress={handleSettingsPress}>
+          <Text style={styles.settingsButtonText}>⚙️</Text>
+        </Pressable>
+      </View>
       <View style={styles.profileCard}>
         <Text style={styles.name}>{name || 'Guest User'}</Text>
         <View style={styles.statsRow}>
@@ -29,7 +40,6 @@ export default function Profile() {
           </Text>
         </View>
       </View>
-      <Text style={styles.subtitle}>Phase 2 will implement full profile screen</Text>
     </View>
   );
 }
@@ -40,11 +50,28 @@ const styles = StyleSheet.create({
     padding: SPACING.LG,
     backgroundColor: COLORS.CREAM_BG,
   },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: SPACING.LG,
+    marginTop: SPACING.XL,
+  },
   title: {
     ...TYPOGRAPHY.TITLE,
     color: COLORS.SAGE_PRIMARY,
-    marginBottom: SPACING.LG,
-    marginTop: SPACING.XL,
+  },
+  settingsButton: {
+    backgroundColor: COLORS.SAGE_PRIMARY,
+    borderRadius: RADIUS.BUTTON,
+    width: 48,
+    height: 48,
+    justifyContent: 'center',
+    alignItems: 'center',
+    ...SHADOWS.LIGHT,
+  },
+  settingsButtonText: {
+    fontSize: 24,
   },
   profileCard: {
     backgroundColor: COLORS.SAND_BG,
@@ -65,10 +92,5 @@ const styles = StyleSheet.create({
   stat: {
     ...TYPOGRAPHY.BODY,
     color: COLORS.CHARCOAL_TEXT,
-  },
-  subtitle: {
-    ...TYPOGRAPHY.BODY,
-    color: COLORS.CHARCOAL_TEXT,
-    textAlign: 'center',
   },
 });

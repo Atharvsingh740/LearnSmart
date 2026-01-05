@@ -42,7 +42,14 @@ export const useUserStore = create<UserState>()(
       imageReadCount: 0,
       imageReadResetTime: new Date().toISOString(),
       
-      setUser: (data) => set((state) => ({ ...state, ...data })),
+      setUser: (data) => set((state) => {
+        const newState = { ...state, ...data };
+        // Generate userId if first time
+        if (!state.userId && data.name) {
+          newState.userId = `user_${Date.now()}`;
+        }
+        return newState;
+      }),
       addXP: (amount) => set((state) => ({ xp: state.xp + amount })),
       addSmartCoins: (amount) => set((state) => ({ smartCoins: state.smartCoins + amount })),
       incrementStreak: () => set((state) => ({ streak: state.streak + 1 })),

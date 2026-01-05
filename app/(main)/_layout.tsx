@@ -37,6 +37,12 @@ export default function MainLayout() {
           title: 'Profile',
         }}
       />
+      <Tabs.Screen
+        name="settings"
+        options={{
+          title: '⚙️ Settings',
+        }}
+      />
     </Tabs>
   );
 }
