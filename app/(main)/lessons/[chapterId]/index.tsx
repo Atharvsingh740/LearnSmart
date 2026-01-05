@@ -12,6 +12,8 @@ import { FlashList } from '@shopify/flash-list';
 import { useCurriculumStore } from '@/store/curriculumStore';
 import { useUserStore } from '@/store/userStore';
 import { COLORS, TYPOGRAPHY, SPACING, RADIUS, SHADOWS } from '@/theme';
+import ConceptCard from '@/components/ConceptCard';
+import ProgressBar from '@/components/ProgressBar';
 
 export default function LessonScreen() {
   const { chapterId } = useLocalSearchParams();
@@ -86,15 +88,13 @@ export default function LessonScreen() {
 
       {/* Progress Bar */}
       <View style={styles.progressContainer}>
-        <View style={styles.progressBarBackground}>
-          <View
-            style={[
-              styles.progressBarFill,
-              { width: `${progress}%` },
-            ]}
-          />
-        </View>
-        <Text style={styles.progressText}>{progress}% Complete</Text>
+        <ProgressBar
+          progress={progress}
+          animated={true}
+          showPercentage={true}
+          showMilestones={true}
+          shimmer={true}
+        />
       </View>
 
       {/* Topic Selector (FlashList) */}
@@ -135,7 +135,13 @@ export default function LessonScreen() {
         <FlashList
           data={selectedTopic.concepts}
           renderItem={({ item }) => (
-            <ConceptCard concept={item} />
+            <ConceptCard
+              concept={item}
+              animated={true}
+              onRelatedConceptPress={(conceptId) => {
+                console.log('Navigate to concept:', conceptId);
+              }}
+            />
           )}
           keyExtractor={(item) => item.id}
           estimatedItemSize={200}
@@ -224,112 +230,6 @@ const TopicButton: React.FC<TopicButtonProps> = ({ topic, isActive, onPress, ind
   </Pressable>
 );
 
-interface ConceptCardProps {
-  concept: {
-    id: string;
-    title: string;
-    content: string;
-    bullets: string[];
-    keyTakeaway: string;
-    diagram?: {
-      type: string;
-      elements: Array<{
-        label: string;
-        icon?: string;
-        x?: number;
-        y?: number;
-        type?: string;
-      }>;
-    };
-  };
-}
-
-const ConceptCard: React.FC<ConceptCardProps> = ({ concept }) => {
-  const [tooltipVisible, setTooltipVisible] = useState<string | null>(null);
-
-  return (
-    <View style={styles.conceptCard}>
-      {/* Title with unique font */}
-      <Text style={styles.conceptTitle}>{concept.title}</Text>
-
-      {/* Content with different font */}
-      <Text style={styles.conceptBody}>{concept.content}</Text>
-
-      {/* Bullet Points */}
-      <View style={styles.bulletContainer}>
-        {concept.bullets.map((bullet, idx) => (
-          <View key={idx} style={styles.bulletPoint}>
-            <Text style={styles.bullet}>•</Text>
-            <Text style={styles.bulletText}>{bullet}</Text>
-          </View>
-        ))}
-      </View>
-
-      {/* Diagram (if available) */}
-      {concept.diagram && (
-        <DiagramComponent 
-          diagram={concept.diagram} 
-          tooltipVisible={tooltipVisible}
-          setTooltipVisible={setTooltipVisible}
-        />
-      )}
-
-      {/* Key Takeaway Box */}
-      <View style={styles.keyTakeawayBox}>
-        <View style={styles.keyTakeawayHeader}>
-          <Text style={styles.keyTakeawayLabel}>🎯 Key Takeaway</Text>
-        </View>
-        <Text style={styles.keyTakeawayText}>{concept.keyTakeaway}</Text>
-      </View>
-    </View>
-  );
-};
-
-interface DiagramComponentProps {
-  diagram: {
-    type: string;
-    elements: Array<{
-      label: string;
-      icon?: string;
-      x?: number;
-      y?: number;
-      type?: string;
-    }>;
-  };
-  tooltipVisible: string | null;
-  setTooltipVisible: (id: string | null) => void;
-}
-
-const DiagramComponent: React.FC<DiagramComponentProps> = ({ diagram, tooltipVisible, setTooltipVisible }) => {
-  if (diagram.type !== 'svg') return null;
-
-  return (
-    <View style={styles.diagramContainer}>
-      <Text style={styles.diagramLabel}>📊 Diagram</Text>
-      <View style={styles.diagramElementsContainer}>
-        {diagram.elements.map((el, idx) => (
-          <TouchableOpacity
-            key={idx}
-            style={styles.diagramElement}
-            onPress={() => setTooltipVisible(tooltipVisible === el.label ? null : el.label)}
-            activeOpacity={0.7}
-          >
-            <View style={styles.diagramIconContainer}>
-              <Text style={styles.diagramIcon}>{el.icon}</Text>
-            </View>
-            <Text style={styles.diagramElementLabel}>{el.label}</Text>
-            {tooltipVisible === el.label && (
-              <View style={styles.tooltip}>
-                <Text style={styles.tooltipText}>{el.label}</Text>
-              </View>
-            )}
-          </TouchableOpacity>
-        ))}
-      </View>
-    </View>
-  );
-};
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -377,23 +277,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderBottomWidth: 1,
     borderBottomColor: COLORS.SAGE_PRIMARY + '20',
-  },
-  progressBarBackground: {
-    height: 8,
-    backgroundColor: COLORS.SAGE_PRIMARY + '30',
-    borderRadius: 4,
-    overflow: 'hidden',
-  },
-  progressBarFill: {
-    height: '100%',
-    backgroundColor: COLORS.SAGE_PRIMARY,
-    borderRadius: 4,
-  },
-  progressText: {
-    ...TYPOGRAPHY.SMALL,
-    color: COLORS.CHARCOAL_TEXT,
-    textAlign: 'center',
-    marginTop: SPACING.XS,
   },
   topicListContainer: {
     paddingVertical: SPACING.MD,
@@ -468,125 +351,6 @@ const styles = StyleSheet.create({
     ...TYPOGRAPHY.TITLE,
     color: COLORS.CHARCOAL_TEXT,
     textAlign: 'center',
-  },
-  conceptCard: {
-    backgroundColor: '#fff',
-    borderRadius: RADIUS.LARGE,
-    padding: SPACING.MD,
-    marginBottom: SPACING.MD,
-    ...SHADOWS.LIGHT,
-  },
-  conceptTitle: {
-    ...TYPOGRAPHY.HEADER,
-    fontFamily: 'Poppins',
-    color: COLORS.SAGE_PRIMARY,
-    marginBottom: SPACING.MD,
-  },
-  conceptBody: {
-    ...TYPOGRAPHY.BODY,
-    fontFamily: 'Inter',
-    color: COLORS.CHARCOAL_TEXT,
-    lineHeight: 22,
-    marginBottom: SPACING.MD,
-  },
-  bulletContainer: {
-    marginBottom: SPACING.MD,
-  },
-  bulletPoint: {
-    flexDirection: 'row',
-    marginBottom: SPACING.SM,
-    alignItems: 'flex-start',
-  },
-  bullet: {
-    ...TYPOGRAPHY.BODY,
-    color: COLORS.FOREST_ACCENT,
-    marginRight: SPACING.SM,
-    fontWeight: 'bold',
-    lineHeight: 22,
-  },
-  bulletText: {
-    ...TYPOGRAPHY.BODY,
-    color: COLORS.CHARCOAL_TEXT,
-    flex: 1,
-    lineHeight: 22,
-  },
-  diagramContainer: {
-    backgroundColor: COLORS.SAND_BG,
-    borderRadius: RADIUS.MEDIUM,
-    padding: SPACING.MD,
-    marginBottom: SPACING.MD,
-    borderWidth: 1,
-    borderColor: COLORS.SAGE_PRIMARY + '30',
-  },
-  diagramLabel: {
-    ...TYPOGRAPHY.BODY,
-    fontWeight: '600',
-    marginBottom: SPACING.MD,
-    color: COLORS.CHARCOAL_TEXT,
-  },
-  diagramElementsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-  },
-  diagramElement: {
-    alignItems: 'center',
-    margin: SPACING.SM,
-    minWidth: 70,
-    position: 'relative',
-  },
-  diagramIconContainer: {
-    width: 50,
-    height: 50,
-    backgroundColor: '#fff',
-    borderRadius: RADIUS.MEDIUM,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: SPACING.XS,
-    ...SHADOWS.LIGHT,
-  },
-  diagramIcon: {
-    fontSize: 28,
-  },
-  diagramElementLabel: {
-    ...TYPOGRAPHY.SMALL,
-    color: COLORS.CHARCOAL_TEXT,
-    fontWeight: '500',
-    textAlign: 'center',
-  },
-  tooltip: {
-    position: 'absolute',
-    top: -30,
-    backgroundColor: COLORS.FOREST_ACCENT,
-    paddingHorizontal: SPACING.SM,
-    paddingVertical: SPACING.XS,
-    borderRadius: RADIUS.SMALL,
-    zIndex: 100,
-  },
-  tooltipText: {
-    ...TYPOGRAPHY.SMALL,
-    color: '#fff',
-    fontWeight: '600',
-  },
-  keyTakeawayBox: {
-    backgroundColor: COLORS.SAGE_PRIMARY,
-    borderRadius: RADIUS.MEDIUM,
-    padding: SPACING.MD,
-    marginTop: SPACING.MD,
-  },
-  keyTakeawayHeader: {
-    marginBottom: SPACING.SM,
-  },
-  keyTakeawayLabel: {
-    ...TYPOGRAPHY.BODY,
-    fontWeight: '600',
-    color: '#fff',
-  },
-  keyTakeawayText: {
-    ...TYPOGRAPHY.BODY,
-    color: '#fff',
-    fontWeight: '500',
-    lineHeight: 20,
   },
   navigationButtons: {
     flexDirection: 'row',

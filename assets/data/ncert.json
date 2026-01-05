@@ -205,12 +205,81 @@
                       ],
                       "keyTakeaway": "Each part of a plant has an important role in helping it survive and grow.",
                       "diagram": {
-                        "type": "svg",
+                        "type": "anatomy",
+                        "title": "Plant Structure",
+                        "interactiveMode": true,
                         "elements": [
-                          { "label": "Flower", "icon": "🌺" },
-                          { "label": "Leaves", "icon": "🍃" },
-                          { "label": "Stem", "icon": "🟢" },
-                          { "label": "Roots", "icon": "🟤" }
+                          { 
+                            "id": "flower",
+                            "label": "Flower", 
+                            "icon": "🌺",
+                            "type": "component",
+                            "description": "Flowers are the reproductive part of plants. They produce seeds for new plants and attract pollinators like bees.",
+                            "relatedConcepts": ["Pollination", "Seeds"]
+                          },
+                          { 
+                            "id": "leaves",
+                            "label": "Leaves", 
+                            "icon": "🍃",
+                            "type": "component",
+                            "description": "Leaves are the food factory of plants. They use sunlight, water, and carbon dioxide to make food through photosynthesis.",
+                            "relatedConcepts": ["Photosynthesis", "Chlorophyll"]
+                          },
+                          { 
+                            "id": "stem",
+                            "label": "Stem", 
+                            "icon": "🟢",
+                            "type": "component",
+                            "description": "The stem supports the plant and transports water and nutrients between roots and leaves.",
+                            "relatedConcepts": ["Transportation", "Support"]
+                          },
+                          { 
+                            "id": "roots",
+                            "label": "Roots", 
+                            "icon": "🟤",
+                            "type": "component",
+                            "description": "Roots anchor the plant in soil and absorb water and minerals from the ground.",
+                            "relatedConcepts": ["Absorption", "Anchorage"]
+                          }
+                        ],
+                        "connections": [
+                          { "from": "roots", "to": "stem", "label": "water & nutrients" },
+                          { "from": "stem", "to": "leaves", "label": "water transport" },
+                          { "from": "stem", "to": "flower", "label": "nutrients" }
+                        ]
+                      },
+                      "realWorldExamples": [
+                        {
+                          "title": "Trees in Your Garden",
+                          "description": "Look at any tree around you. Notice the thick trunk (stem), the roots going into the ground, green leaves on branches, and colorful flowers in season.",
+                          "icon": "🌳"
+                        },
+                        {
+                          "title": "Vegetable Plants",
+                          "description": "When we eat carrots, we're eating the root! When we eat broccoli, we're eating the flower buds. Different parts of plants give us different foods.",
+                          "icon": "🥕"
+                        }
+                      ],
+                      "misconceptions": [
+                        {
+                          "wrong": "Plants get their food from the soil",
+                          "correct": "Plants make their own food in leaves using sunlight",
+                          "explanation": "While roots absorb water and minerals from soil, plants actually create their own food (sugars) in leaves through photosynthesis using sunlight, water, and air."
+                        }
+                      ],
+                      "deepDive": {
+                        "title": "How Plants Make Food",
+                        "content": "Plants are amazing because they can make their own food! This process is called photosynthesis.",
+                        "details": [
+                          "Chlorophyll (green color) in leaves captures sunlight",
+                          "Roots bring water from the soil to leaves",
+                          "Leaves take in carbon dioxide from the air",
+                          "Using sunlight energy, plants combine water and carbon dioxide to make glucose (sugar)",
+                          "Oxygen is released as a byproduct, which we breathe!"
+                        ],
+                        "resources": [
+                          "Watch how plants grow in time-lapse videos",
+                          "Try growing a bean plant to observe roots, stem, and leaves"
                         ]
                       }
                     }
