@@ -70,7 +70,10 @@ export default function LessonScreen() {
     <View style={styles.container}>
       {/* Breadcrumb Navigation */}
       <View style={styles.breadcrumb}>
-        <Text style={styles.breadcrumbText}>{breadcrumbText}</Text>
+        <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
+          <Text style={styles.backButtonText}>← Back</Text>
+        </TouchableOpacity>
+        <Text style={styles.breadcrumbText} numberOfLines={1}>{breadcrumbText}</Text>
         <TouchableOpacity 
           style={styles.bookmarkButton}
           onPress={handleBookmark}
@@ -161,6 +164,23 @@ export default function LessonScreen() {
             </Text>
           </Pressable>
         </View>
+
+        {/* Quick Test Button */}
+        {selectedTopicIndex === topics.length - 1 && (
+          <Pressable
+            style={styles.quickTestButton}
+            onPress={() => router.push(`/lessons/${chapterId}/quick-test`)}
+          >
+            <Text style={styles.quickTestIcon}>📝</Text>
+            <View style={styles.quickTestTextContainer}>
+              <Text style={styles.quickTestTitle}>Quick Test</Text>
+              <Text style={styles.quickTestSubtitle}>
+                Test your knowledge with {Math.min(5, selectedTopic.concepts.length)} questions
+              </Text>
+            </View>
+            <Text style={styles.quickTestArrow}>→</Text>
+          </Pressable>
+        )}
 
         <View style={styles.bottomSpacing} />
       </ScrollView>
@@ -330,6 +350,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderBottomWidth: 1,
     borderBottomColor: COLORS.SAGE_PRIMARY + '20',
+  },
+  backButton: {
+    padding: SPACING.SM,
+    marginRight: SPACING.SM,
+  },
+  backButtonText: {
+    ...TYPOGRAPHY.SMALL,
+    color: COLORS.SAGE_PRIMARY,
+    fontWeight: '600',
   },
   breadcrumbText: {
     ...TYPOGRAPHY.SMALL,
@@ -588,5 +617,38 @@ const styles = StyleSheet.create({
   },
   bottomSpacing: {
     height: SPACING.XL,
+  },
+  quickTestButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderRadius: RADIUS.LARGE,
+    padding: SPACING.MD,
+    marginBottom: SPACING.LG,
+    borderWidth: 2,
+    borderColor: COLORS.SAGE_PRIMARY,
+    ...SHADOWS.MEDIUM,
+  },
+  quickTestIcon: {
+    fontSize: 32,
+    marginRight: SPACING.MD,
+  },
+  quickTestTextContainer: {
+    flex: 1,
+  },
+  quickTestTitle: {
+    ...TYPOGRAPHY.HEADER,
+    color: COLORS.SAGE_PRIMARY,
+    marginBottom: SPACING.XS,
+  },
+  quickTestSubtitle: {
+    ...TYPOGRAPHY.SMALL,
+    color: COLORS.CHARCOAL_TEXT,
+    opacity: 0.7,
+  },
+  quickTestArrow: {
+    ...TYPOGRAPHY.HEADER,
+    color: COLORS.SAGE_PRIMARY,
+    fontSize: 24,
   },
 });

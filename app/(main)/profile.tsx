@@ -16,6 +16,9 @@ export default function Profile() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
+        <Pressable style={styles.backButton} onPress={() => router.back()}>
+          <Text style={styles.backButtonText}>← Back</Text>
+        </Pressable>
         <Text style={styles.title}>{t('home.profile')}</Text>
         <Pressable style={styles.settingsButton} onPress={handleSettingsPress}>
           <Text style={styles.settingsButtonText}>⚙️</Text>
@@ -57,9 +60,19 @@ const styles = StyleSheet.create({
     marginBottom: SPACING.LG,
     marginTop: SPACING.XL,
   },
+  backButton: {
+    padding: SPACING.SM,
+  },
+  backButtonText: {
+    ...TYPOGRAPHY.BODY,
+    color: COLORS.SAGE_PRIMARY,
+    fontWeight: '600',
+  },
   title: {
     ...TYPOGRAPHY.TITLE,
     color: COLORS.SAGE_PRIMARY,
+    flex: 1,
+    textAlign: 'center',
   },
   settingsButton: {
     backgroundColor: COLORS.SAGE_PRIMARY,

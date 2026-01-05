@@ -1,16 +1,28 @@
 import React from 'react';
 import { View, Text, ScrollView, StyleSheet, Pressable, Linking } from 'react-native';
+import { useRouter } from 'expo-router';
 import { COLORS, TYPOGRAPHY, SPACING, RADIUS, SHADOWS } from '../theme';
 
 export default function PrivacyPolicyScreen() {
+  const router = useRouter();
   const contactEmail = 'learnsmartofficial24@gmail.com';
 
   const handleEmailPress = () => {
     Linking.openURL(`mailto:${contactEmail}`);
   };
 
+  const handleBack = () => {
+    router.back();
+  };
+
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      <View style={styles.header}>
+        <Pressable style={styles.backButton} onPress={handleBack}>
+          <Text style={styles.backButtonText}>← Back</Text>
+        </Pressable>
+        <View style={styles.headerSpacer} />
+      </View>
       <Text style={styles.title}>Privacy Policy</Text>
       <Text style={styles.lastUpdated}>Last Updated: January 2026</Text>
 
@@ -187,6 +199,23 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.SAND_BG,
     paddingHorizontal: SPACING.MD,
     paddingTop: SPACING.MD,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingBottom: SPACING.MD,
+  },
+  backButton: {
+    padding: SPACING.SM,
+  },
+  backButtonText: {
+    ...TYPOGRAPHY.BODY,
+    color: COLORS.SAGE_PRIMARY,
+    fontWeight: '600',
+  },
+  headerSpacer: {
+    width: 50,
   },
   title: {
     ...TYPOGRAPHY.TITLE,

@@ -55,6 +55,12 @@ export default function LessonsScreen() {
       showsVerticalScrollIndicator={false}
       scrollEventThrottle={16}
     >
+      <View style={styles.header}>
+        <Pressable style={styles.backButton} onPress={() => router.back()}>
+          <Text style={styles.backButtonText}>← Back</Text>
+        </Pressable>
+        <View style={styles.headerSpacer} />
+      </View>
       <Text style={styles.title}>📚 Lessons</Text>
       <Text style={styles.subtitle}>{selectedClass?.name || 'Select Class'}</Text>
 
@@ -155,7 +161,12 @@ const SubjectCard: React.FC<SubjectCardProps> = ({ subject, isExpanded, onToggle
                   <Text style={styles.subCategoryTitle}>{subCat.name}</Text>
                   <View style={styles.chapterGrid}>
                     {subCatChapters.map(chapter => (
-                      <ChapterButton key={chapter.id} chapter={chapter} />
+                      <ChapterButton 
+                        key={chapter.id} 
+                        chapter={chapter} 
+                        subjectId={subject.id}
+                        classId={selectedClassId}
+                      />
                     ))}
                   </View>
                 </View>
@@ -165,7 +176,12 @@ const SubjectCard: React.FC<SubjectCardProps> = ({ subject, isExpanded, onToggle
             // Regular chapter grid
             <View style={styles.chapterGrid}>
               {chapters.map(chapter => (
-                <ChapterButton key={chapter.id} chapter={chapter} />
+                <ChapterButton 
+                  key={chapter.id} 
+                  chapter={chapter} 
+                  subjectId={subject.id}
+                  classId={selectedClassId}
+                />
               ))}
             </View>
           )}
@@ -185,28 +201,45 @@ interface ChapterButtonProps {
       title: string;
     }>;
   };
+  subjectId?: string;
+  classId?: string;
 }
 
-const ChapterButton: React.FC<ChapterButtonProps> = ({ chapter }) => {
+const ChapterButton: React.FC<ChapterButtonProps> = ({ chapter, subjectId, classId }) => {
   const router = useRouter();
 
+  const handleLessonPress = () => {
+    router.push(`/lessons/${chapter.id}`);
+  };
+
+  const handleTestPress = () => {
+    if (classId && subjectId) {
+      router.push(`/test/${classId}/${subjectId}/${chapter.id}`);
+    }
+  };
+
   return (
-    <Pressable
-      style={styles.chapterButton}
-      onPress={() => {
-        router.push(`/lessons/${chapter.id}`);
-      }}
-    >
-      <View style={styles.chapterIconContainer}>
-        <Text style={styles.chapterIcon}>{chapter.icon}</Text>
-      </View>
-      <Text style={styles.chapterTitle} numberOfLines={2}>
-        {chapter.title}
-      </Text>
-      <Text style={styles.topicCount}>
-        {chapter.topics.length} {chapter.topics.length === 1 ? 'topic' : 'topics'}
-      </Text>
-    </Pressable>
+    <View style={styles.chapterButton}>
+      <Pressable
+        style={styles.chapterContent}
+        onPress={handleLessonPress}
+      >
+        <View style={styles.chapterIconContainer}>
+          <Text style={styles.chapterIcon}>{chapter.icon}</Text>
+        </View>
+        <Text style={styles.chapterTitle} numberOfLines={2}>
+          {chapter.title}
+        </Text>
+        <Text style={styles.topicCount}>
+          {chapter.topics.length} {chapter.topics.length === 1 ? 'topic' : 'topics'}
+        </Text>
+      </Pressable>
+      {classId && subjectId && (
+        <Pressable style={styles.testButton} onPress={handleTestPress}>
+          <Text style={styles.testButtonText}>📝 Test</Text>
+        </Pressable>
+      )}
+    </View>
   );
 };
 
@@ -215,6 +248,24 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.SAND_BG,
     paddingTop: SPACING.MD,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: SPACING.MD,
+    paddingBottom: SPACING.MD,
+  },
+  backButton: {
+    padding: SPACING.SM,
+  },
+  backButtonText: {
+    ...TYPOGRAPHY.BODY,
+    color: COLORS.SAGE_PRIMARY,
+    fontWeight: '600',
+  },
+  headerSpacer: {
+    width: 50,
   },
   title: {
     ...TYPOGRAPHY.TITLE,
@@ -326,10 +377,13 @@ const styles = StyleSheet.create({
     width: '48%',
     backgroundColor: COLORS.SAND_BG,
     borderRadius: RADIUS.MEDIUM,
-    padding: SPACING.MD,
-    alignItems: 'center',
     marginBottom: SPACING.SM,
     ...SHADOWS.LIGHT,
+    overflow: 'hidden',
+  },
+  chapterContent: {
+    padding: SPACING.MD,
+    alignItems: 'center',
   },
   chapterIconContainer: {
     width: 50,
@@ -355,6 +409,16 @@ const styles = StyleSheet.create({
     color: COLORS.CHARCOAL_TEXT,
     opacity: 0.6,
     fontSize: 11,
+  },
+  testButton: {
+    backgroundColor: COLORS.SAGE_PRIMARY,
+    paddingVertical: SPACING.SM,
+    alignItems: 'center',
+  },
+  testButtonText: {
+    ...TYPOGRAPHY.SMALL,
+    color: '#fff',
+    fontWeight: '600',
   },
   emptyState: {
     padding: SPACING.XL,
