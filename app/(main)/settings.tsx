@@ -4,11 +4,16 @@ import { useRouter } from 'expo-router';
 import { useUserStore } from '../../store/userStore';
 import { useSmartyPersonalityStore } from '../../store/smartyPersonalityStore';
 import { useSmartyStore } from '../../store/smartyStore';
+import { useXPStore } from '@/store/xpStore';
+import { useSmartCoinStore } from '@/store/smartCoinStore';
+import { useBadgeStore } from '@/store/badgeStore';
+import { useStreakStore } from '@/store/streakStore';
+import { useAvatarStore } from '@/store/avatarStore';
 import { COLORS, TYPOGRAPHY, SPACING, RADIUS, SHADOWS } from '../../theme';
 
 export default function SettingsScreen() {
   const router = useRouter();
-  const { name, class: userClass, stream, avatar, setUser } = useUserStore();
+  const { name, class: userClass, stream, setUser } = useUserStore();
   const smartyPersonality = useSmartyPersonalityStore();
   const smartyStore = useSmartyStore();
   const [notifications, setNotifications] = useState(true);
@@ -45,6 +50,13 @@ export default function SettingsScreen() {
               streak: 0,
               completedLessons: [],
             });
+
+            useXPStore.getState().resetAll();
+            useSmartCoinStore.getState().resetAll();
+            useBadgeStore.getState().resetAll();
+            useStreakStore.getState().resetAll();
+            useAvatarStore.getState().resetAll();
+
             Alert.alert('Data Deleted', 'All your data has been cleared.');
           },
           style: 'destructive',
@@ -112,30 +124,25 @@ export default function SettingsScreen() {
 
       {/* Smarty AI */}
       <SettingSection title="🤖 Smarty AI">
-        <Text style={styles.sectionDescription}>Personality Preset</Text>
-        <View style={styles.presetRow}>
-          {(
-            [
-              { key: 'warm', label: 'Warm' },
-              { key: 'formal', label: 'Formal' },
-              { key: 'casual', label: 'Casual' },
-              { key: 'motivational', label: 'Coach' },
-            ] as const
-          ).map((preset) => {
-            const selected = smartyPersonality.currentSettings.tone === preset.key;
-            return (
-              <Pressable
-                key={preset.key}
-                onPress={() => smartyPersonality.loadPreset(preset.key)}
-                style={[styles.presetChip, selected && styles.presetChipSelected]}
-              >
-                <Text style={[styles.presetChipText, selected && styles.presetChipTextSelected]}>
-                  {preset.label}
-                </Text>
-              </Pressable>
-            );
-          })}
-        </View>
+        <Text style={styles.sectionDescription}>Personality</Text>
+
+        <Pressable
+          style={styles.settingItem}
+          onPress={() => router.push('/(main)/settings/smarty-personality')}
+        >
+          <Text style={styles.settingLabel}>Smarty Personality</Text>
+          <Text style={styles.settingValue}>
+            {smartyPersonality.preset === 'warm-mentor'
+              ? 'Warm Mentor'
+              : smartyPersonality.preset === 'formal-guide'
+                ? 'Formal Guide'
+                : smartyPersonality.preset === 'casual-friend'
+                  ? 'Casual Friend'
+                  : smartyPersonality.preset === 'motivational-coach'
+                    ? 'Motivational Coach'
+                    : 'Custom'}
+          </Text>
+        </Pressable>
 
         <Pressable
           style={styles.dangerButton}

@@ -7,8 +7,12 @@ import {
   ScrollView,
   ActivityIndicator,
 } from 'react-native';
+import Animated, { FadeInUp, FadeOutUp, ZoomIn, ZoomOut } from 'react-native-reanimated';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useTestStore } from '@/store/testStore';
+import { useXPStore, type XPGainBatch } from '@/store/xpStore';
+import { useRankStore, type RankUpEvent } from '@/store/rankStore';
+import { useBadgeStore, type Badge } from '@/store/badgeStore';
 import { COLORS, TYPOGRAPHY, SPACING, RADIUS, SHADOWS } from '@/theme';
 
 export default function TestResultScreen() {
@@ -18,15 +22,40 @@ export default function TestResultScreen() {
   
   const [loading, setLoading] = useState(true);
   const [result, setResult] = useState<ReturnType<typeof useTestStore.getState>['testHistory'][number] | null>(null);
-  
+
+  const [xpBatch, setXpBatch] = useState<XPGainBatch | null>(null);
+  const [rankUpEvent, setRankUpEvent] = useState<RankUpEvent | null>(null);
+  const [badgeUnlocked, setBadgeUnlocked] = useState<Badge | null>(null);
+
   useEffect(() => {
     if (testId) {
       const history = getTestHistory();
-      const testResult = history.find(t => t.testId === testId);
+      const testResult = history.find((t) => t.testId === testId);
       setResult(testResult || null);
       setLoading(false);
     }
   }, [testId]);
+
+  useEffect(() => {
+    if (!result) return;
+
+    const batch = useXPStore.getState().consumeLastGainBatch();
+    if (batch) {
+      setXpBatch(batch);
+      const t = setTimeout(() => setXpBatch(null), 2000);
+      return () => clearTimeout(t);
+    }
+  }, [result?.testId]);
+
+  useEffect(() => {
+    if (!result) return;
+
+    const rankUp = useRankStore.getState().consumeLastRankUpEvent();
+    if (rankUp) setRankUpEvent(rankUp);
+
+    const badge = useBadgeStore.getState().consumeLastUnlockedBadge();
+    if (badge) setBadgeUnlocked(badge);
+  }, [result?.testId]);
   
   const handleBack = () => {
     router.back();
@@ -314,6 +343,50 @@ export default function TestResultScreen() {
         
         <View style={styles.bottomSpacing} />
       </ScrollView>
+
+      {xpBatch && (
+        <Animated.View
+          entering={FadeInUp.duration(220)}
+          exiting={FadeOutUp.duration(220)}
+          style={styles.xpToast}
+        >
+          <Text style={styles.xpToastText}>+{xpBatch.amount} XP</Text>
+        </Animated.View>
+      )}
+
+      {badgeUnlocked && (
+        <Animated.View entering={ZoomIn.duration(220)} exiting={ZoomOut.duration(220)} style={styles.overlay}>
+          <Pressable style={styles.overlayBackdrop} onPress={() => setBadgeUnlocked(null)}>
+            <View style={styles.overlayCard}>
+              <Text style={styles.overlayTitle}>Badge Unlocked!</Text>
+              <Text style={styles.overlayBigIcon}>{badgeUnlocked.icon}</Text>
+              <Text style={styles.overlayText}>{badgeUnlocked.name}</Text>
+              <Text style={styles.overlaySubText}>+{badgeUnlocked.xpReward} XP • +{badgeUnlocked.smartCoinReward} coins</Text>
+              <Pressable style={styles.overlayButton} onPress={() => setBadgeUnlocked(null)}>
+                <Text style={styles.overlayButtonText}>Awesome</Text>
+              </Pressable>
+            </View>
+          </Pressable>
+        </Animated.View>
+      )}
+
+      {rankUpEvent && (
+        <Animated.View entering={ZoomIn.duration(220)} exiting={ZoomOut.duration(220)} style={styles.overlay}>
+          <Pressable style={styles.overlayBackdrop} onPress={() => setRankUpEvent(null)}>
+            <View style={styles.overlayCard}>
+              <Text style={styles.overlayTitle}>Rank Up! 🎉</Text>
+              <Text style={styles.overlayBigIcon}>{rankUpEvent.to.icon}</Text>
+              <Text style={styles.overlayText}>
+                {rankUpEvent.from.name} → {rankUpEvent.to.name}
+              </Text>
+              <Text style={styles.overlaySubText}>Keep learning to unlock more rewards.</Text>
+              <Pressable style={styles.overlayButton} onPress={() => setRankUpEvent(null)}>
+                <Text style={styles.overlayButtonText}>Let’s go</Text>
+              </Pressable>
+            </View>
+          </Pressable>
+        </Animated.View>
+      )}
     </View>
   );
 }
@@ -598,5 +671,81 @@ const styles = StyleSheet.create({
   },
   bottomSpacing: {
     height: SPACING.XL,
+  },
+  xpToast: {
+    position: 'absolute',
+    bottom: 24,
+    left: 24,
+    right: 24,
+    backgroundColor: COLORS.SAGE_PRIMARY,
+    borderRadius: RADIUS.BUTTON,
+    paddingVertical: SPACING.MD,
+    alignItems: 'center',
+    ...SHADOWS.MEDIUM,
+  },
+  xpToastText: {
+    ...TYPOGRAPHY.BODY,
+    color: '#fff',
+    fontWeight: '800',
+  },
+  overlay: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  overlayBackdrop: {
+    flex: 1,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.35)',
+    padding: SPACING.LG,
+  },
+  overlayCard: {
+    width: '100%',
+    maxWidth: 420,
+    backgroundColor: '#fff',
+    borderRadius: RADIUS.LARGE,
+    padding: SPACING.XL,
+    alignItems: 'center',
+    ...SHADOWS.MEDIUM,
+  },
+  overlayTitle: {
+    ...TYPOGRAPHY.HEADER,
+    color: COLORS.SAGE_PRIMARY,
+    marginBottom: SPACING.MD,
+  },
+  overlayBigIcon: {
+    fontSize: 56,
+    marginBottom: SPACING.SM,
+  },
+  overlayText: {
+    ...TYPOGRAPHY.BODY,
+    color: COLORS.CHARCOAL_TEXT,
+    fontWeight: '800',
+    textAlign: 'center',
+  },
+  overlaySubText: {
+    ...TYPOGRAPHY.SMALL,
+    color: COLORS.CHARCOAL_TEXT,
+    opacity: 0.75,
+    marginTop: SPACING.SM,
+    textAlign: 'center',
+  },
+  overlayButton: {
+    marginTop: SPACING.LG,
+    backgroundColor: COLORS.SAGE_PRIMARY,
+    borderRadius: RADIUS.BUTTON,
+    paddingVertical: SPACING.MD,
+    paddingHorizontal: SPACING.XL,
+  },
+  overlayButtonText: {
+    ...TYPOGRAPHY.BODY,
+    color: '#fff',
+    fontWeight: '800',
   },
 });

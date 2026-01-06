@@ -2,6 +2,9 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useCurriculumStore } from './curriculumStore';
+import { useXPStore } from '@/store/xpStore';
+import { useStreakStore } from '@/store/streakStore';
+import { useBadgeStore } from '@/store/badgeStore';
 
 export interface Question {
   id: string;
@@ -337,7 +340,9 @@ export const useTestStore = create<TestState>()(
           currentSession: null,
           recentlyAskedQuestionIds: [...state.recentlyAskedQuestionIds, ...newAskedIds].slice(-200), // Keep last 200
         }));
-        
+
+        applyGamificationForTestResult(result);
+
         return result;
       },
       
@@ -458,3 +463,87 @@ export const useTestStore = create<TestState>()(
     }
   )
 );
+
+function applyGamificationForTestResult(result: TestResult) {
+  try {
+    const xpItems: Array<{ amount: number; type: 'quiz-correct' | 'quiz-streak' | 'difficulty-multiplier'; description: string }> = [];
+
+    let consecutiveCorrect = 0;
+
+    result.questions.forEach((q, idx) => {
+      const userAnswer = result.userAnswers[idx];
+      const isCorrect = userAnswer === q.correctAnswer;
+
+      if (isCorrect) {
+        consecutiveCorrect += 1;
+
+        if (q.difficulty === 'hard') {
+          xpItems.push({
+            amount: 100,
+            type: 'difficulty-multiplier',
+            description: 'Hard question correct',
+          });
+        } else {
+          xpItems.push({
+            amount: 50,
+            type: 'quiz-correct',
+            description: 'Correct answer',
+          });
+        }
+
+        if (consecutiveCorrect % 3 === 0) {
+          xpItems.push({
+            amount: 20,
+            type: 'quiz-streak',
+            description: '3 correct answers streak bonus',
+          });
+        }
+      } else {
+        consecutiveCorrect = 0;
+      }
+    });
+
+    if (result.score === 100) {
+      xpItems.push({
+        amount: 150,
+        type: 'quiz-streak',
+        description: 'Perfect score bonus',
+      });
+    }
+
+    void useXPStore.getState().addXPBatch(xpItems);
+
+    useStreakStore.getState().updateStreak();
+
+    const badgeStore = useBadgeStore.getState();
+
+    const totalQuizzes = useTestStore.getState().testHistory.length;
+    void badgeStore.checkAndUnlockBadges('quizzes_completed', totalQuizzes);
+
+    if (result.timeTaken > 0 && result.timeTaken < 2 * 60 * 1000) {
+      void badgeStore.checkAndUnlockBadges('speed_runner', 1);
+    }
+
+    const perfectStreak = (() => {
+      const history = useTestStore.getState().testHistory;
+      let count = 0;
+      for (const r of history) {
+        if (r.score === 100) count += 1;
+        else break;
+      }
+      return count;
+    })();
+
+    void badgeStore.checkAndUnlockBadges('perfect_scores_streak', perfectStreak);
+
+    const conceptIds = result.questions
+      .map((q) => q.relatedConcept)
+      .filter((c): c is string => Boolean(c));
+
+    badgeStore.addLearnedConcepts(conceptIds);
+    const learnedCount = badgeStore.getLearnedConceptCount();
+    void badgeStore.checkAndUnlockBadges('concepts_learned', learnedCount);
+  } catch (e) {
+    console.warn('Gamification apply failed', e);
+  }
+}

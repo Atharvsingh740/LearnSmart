@@ -61,6 +61,12 @@ export default function MainLayout() {
             title: '⚙️ Settings',
           }}
         />
+        <Tabs.Screen
+          name="gamification/hub"
+          options={{
+            href: null,
+          }}
+        />
       </Tabs>
 
       <SmartFAB onPress={() => setChatOpen(true)} animated={true} />
