@@ -1,50 +1,114 @@
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import React, { useMemo } from 'react';
+import { View, Text, StyleSheet, Pressable, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import { useUserStore } from '../../store/userStore';
-import { COLORS, SPACING, TYPOGRAPHY } from '../../theme';
+import { useUserStore } from '@/store/userStore';
+import { useXPStore } from '@/store/xpStore';
+import { useRankStore } from '@/store/rankStore';
+import { useSmartCoinStore } from '@/store/smartCoinStore';
+import { useStreakStore } from '@/store/streakStore';
+import { useBadgeStore } from '@/store/badgeStore';
+import { COLORS, SPACING, TYPOGRAPHY, RADIUS, SHADOWS } from '@/theme';
+import RankBadge from '@/components/RankBadge';
+import XPDisplay from '@/components/XPDisplay';
+import StreakDisplay from '@/components/StreakDisplay';
+import SmartCoinDisplay from '@/components/SmartCoinDisplay';
 
 export default function Home() {
   const router = useRouter();
   const { t } = useTranslation();
+
   const name = useUserStore((state) => state.name);
-  const xp = useUserStore((state) => state.xp);
-  const smartCoins = useUserStore((state) => state.smartCoins);
-  const streak = useUserStore((state) => state.streak);
+
+  const totalXP = useXPStore((s) => s.totalXP);
+  const rank = useRankStore((s) => s.currentRank);
+  const streak = useStreakStore((s) => s.streak);
+  const coins = useSmartCoinStore((s) => s.balance);
+  const unlockedBadges = useBadgeStore((s) => s.unlockedBadges);
+
+  const unlockedThisWeek = useMemo(() => {
+    const weekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
+    return unlockedBadges
+      .filter((b) => (b.unlockedAt || 0) >= weekAgo)
+      .slice(0, 6);
+  }, [unlockedBadges]);
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container} contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
       <View style={styles.header}>
         <Pressable style={styles.backButton} onPress={() => router.back()}>
           <Text style={styles.backButtonText}>← Back</Text>
         </Pressable>
         <View style={styles.headerSpacer} />
       </View>
-      <Text style={styles.title}>{t('app_name')}</Text>
-      <View style={styles.statsContainer}>
-        <View style={styles.statBox}>
-          <Text style={styles.statValue}>{xp}</Text>
-          <Text style={styles.statLabel}>{t('profile.xp')}</Text>
-        </View>
-        <View style={styles.statBox}>
-          <Text style={styles.statValue}>{smartCoins}</Text>
-          <Text style={styles.statLabel}>{t('profile.smart_coins')}</Text>
-        </View>
-        <View style={styles.statBox}>
-          <Text style={styles.statValue}>{streak}</Text>
-          <Text style={styles.statLabel}>{t('profile.streak')}</Text>
+
+      <Text style={styles.welcome}>Welcome, {name || 'Learner'} 👋</Text>
+      <Text style={styles.appTitle}>{t('app_name')}</Text>
+
+      <View style={styles.topRow}>
+        <RankBadge rank={rank} size="medium" style={styles.rankBadge} />
+        <View style={styles.xpChip}>
+          <Text style={styles.xpChipText}>{totalXP.toLocaleString()} XP</Text>
         </View>
       </View>
-      <Text style={styles.subtitle}>Phase 2 will implement full home screen</Text>
-    </View>
+
+      <XPDisplay totalXP={totalXP} style={styles.block} />
+
+      <View style={styles.rowBetween}>
+        <View style={styles.flexBlock}>
+          <StreakDisplay current={streak.current} longest={streak.longest} />
+        </View>
+        <SmartCoinDisplay balance={coins} style={styles.coinBlock} />
+      </View>
+
+      <View style={styles.sectionCard}>
+        <Text style={styles.sectionTitle}>Unlocked This Week</Text>
+        {unlockedThisWeek.length === 0 ? (
+          <Text style={styles.emptyText}>No new badges yet. Complete quizzes to unlock!</Text>
+        ) : (
+          <View style={styles.badgeRow}>
+            {unlockedThisWeek.map((b) => (
+              <View key={b.id} style={styles.badgePill}>
+                <Text style={styles.badgeIcon}>{b.icon}</Text>
+                <Text style={styles.badgeName} numberOfLines={1}>
+                  {b.name}
+                </Text>
+              </View>
+            ))}
+          </View>
+        )}
+      </View>
+
+      <View style={styles.linksRow}>
+        <Pressable style={styles.linkButton} onPress={() => router.push('/(main)/profile/trophy-room')}>
+          <Text style={styles.linkButtonText}>🏆 Trophy Room</Text>
+        </Pressable>
+        <Pressable style={styles.linkButton} onPress={() => router.push('/(main)/profile/avatar-shop')}>
+          <Text style={styles.linkButtonText}>🧑 Avatar</Text>
+        </Pressable>
+      </View>
+
+      <View style={styles.linksRow}>
+        <Pressable style={styles.linkButton} onPress={() => router.push('/(main)/gamification/hub')}>
+          <Text style={styles.linkButtonText}>🎮 Hub</Text>
+        </Pressable>
+        <Pressable style={styles.linkButton} onPress={() => router.push('/(main)/profile/streak-calendar')}>
+          <Text style={styles.linkButtonText}>📅 Calendar</Text>
+        </Pressable>
+      </View>
+
+      <View style={{ height: SPACING.XXL }} />
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: SPACING.LG,
     backgroundColor: COLORS.CREAM_BG,
+  },
+  content: {
+    padding: SPACING.LG,
   },
   header: {
     flexDirection: 'row',
@@ -63,36 +127,113 @@ const styles = StyleSheet.create({
   headerSpacer: {
     width: 50,
   },
-  title: {
+  welcome: {
+    ...TYPOGRAPHY.BODY,
+    color: COLORS.CHARCOAL_TEXT,
+    marginTop: SPACING.SM,
+    opacity: 0.9,
+  },
+  appTitle: {
     ...TYPOGRAPHY.TITLE,
     color: COLORS.SAGE_PRIMARY,
     marginBottom: SPACING.LG,
-    marginTop: SPACING.MD,
   },
-  statsContainer: {
+  topRow: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginBottom: SPACING.XL,
-  },
-  statBox: {
     alignItems: 'center',
-    backgroundColor: COLORS.SAND_BG,
-    padding: SPACING.MD,
-    borderRadius: 16,
-    minWidth: 80,
+    justifyContent: 'space-between',
+    gap: SPACING.SM,
+    marginBottom: SPACING.MD,
   },
-  statValue: {
-    ...TYPOGRAPHY.HEADER,
-    color: COLORS.SAGE_PRIMARY,
+  rankBadge: {
+    flex: 1,
   },
-  statLabel: {
-    ...TYPOGRAPHY.SMALL,
-    color: COLORS.CHARCOAL_TEXT,
-    marginTop: SPACING.XS,
+  xpChip: {
+    backgroundColor: '#fff',
+    borderRadius: RADIUS.BUTTON,
+    paddingHorizontal: SPACING.MD,
+    paddingVertical: SPACING.SM,
+    borderWidth: 1,
+    borderColor: COLORS.SAGE_PRIMARY + '20',
+    ...SHADOWS.LIGHT,
   },
-  subtitle: {
+  xpChipText: {
     ...TYPOGRAPHY.BODY,
     color: COLORS.CHARCOAL_TEXT,
-    textAlign: 'center',
+    fontWeight: '800',
+  },
+  block: {
+    marginBottom: SPACING.LG,
+  },
+  rowBetween: {
+    flexDirection: 'row',
+    gap: SPACING.SM,
+    alignItems: 'flex-start',
+  },
+  flexBlock: {
+    flex: 1,
+  },
+  coinBlock: {
+    justifyContent: 'center',
+    height: 62,
+  },
+  sectionCard: {
+    marginTop: SPACING.LG,
+    backgroundColor: '#fff',
+    borderRadius: RADIUS.LARGE,
+    padding: SPACING.LG,
+    ...SHADOWS.LIGHT,
+  },
+  sectionTitle: {
+    ...TYPOGRAPHY.HEADER,
+    color: COLORS.SAGE_PRIMARY,
+    marginBottom: SPACING.MD,
+  },
+  emptyText: {
+    ...TYPOGRAPHY.BODY,
+    color: COLORS.CHARCOAL_TEXT,
+    opacity: 0.75,
+  },
+  badgeRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: SPACING.SM,
+  },
+  badgePill: {
+    maxWidth: '48%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: COLORS.SAND_BG,
+    borderRadius: RADIUS.BUTTON,
+    paddingVertical: SPACING.SM,
+    paddingHorizontal: SPACING.MD,
+  },
+  badgeIcon: {
+    fontSize: 18,
+    marginRight: SPACING.XS,
+  },
+  badgeName: {
+    ...TYPOGRAPHY.SMALL,
+    color: COLORS.CHARCOAL_TEXT,
+    fontWeight: '700',
+    flexShrink: 1,
+  },
+  linksRow: {
+    flexDirection: 'row',
+    gap: SPACING.SM,
+    marginTop: SPACING.MD,
+  },
+  linkButton: {
+    flex: 1,
+    backgroundColor: COLORS.SAGE_PRIMARY,
+    borderRadius: RADIUS.BUTTON,
+    paddingVertical: SPACING.MD,
+    alignItems: 'center',
+    ...SHADOWS.LIGHT,
+  },
+  linkButtonText: {
+    ...TYPOGRAPHY.BODY,
+    color: '#fff',
+    fontWeight: '800',
   },
 });

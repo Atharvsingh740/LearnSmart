@@ -127,7 +127,7 @@ export default function ChatModal({ onClose }: ChatModalProps) {
       await new Promise((r) => setTimeout(r, 350));
 
       const concepts = getContextConceptIds(text);
-      const personality = personalityStore.currentSettings;
+      const personality = personalityStore.settings;
       const { response } = generateSmartyResponse(text, personality, concepts);
 
       if (!validateSmartyResponse(response)) {
