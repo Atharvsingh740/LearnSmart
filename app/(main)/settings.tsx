@@ -206,11 +206,33 @@ export default function SettingsScreen() {
         </Pressable>
       </SettingSection>
 
+      {/* Subscription & Credits */}
+      <SettingSection title="💳 Subscription">
+        <Pressable 
+          style={styles.settingItem} 
+          onPress={() => router.push('/(main)/subscription')}
+        >
+          <Text style={styles.settingLabel}>Manage Subscription</Text>
+          <Text style={styles.arrow}>›</Text>
+        </Pressable>
+        <Pressable style={styles.settingItem} onPress={() => {}}>
+          <Text style={styles.settingLabel}>Payment History</Text>
+          <Text style={styles.arrow}>›</Text>
+        </Pressable>
+      </SettingSection>
+
       {/* App Info */}
       <SettingSection title="ℹ️ About">
         <SettingItem label="App Version" value="1.0.0" />
         <SettingItem label="Build Number" value="1" />
         <SettingItem label="Platform" value="React Native" />
+        <Pressable 
+          style={styles.settingItem} 
+          onPress={() => router.push('/(main)/about')}
+        >
+          <Text style={styles.settingLabel}>About LearnSmart</Text>
+          <Text style={styles.arrow}>›</Text>
+        </Pressable>
       </SettingSection>
 
       <View style={styles.footer} />
