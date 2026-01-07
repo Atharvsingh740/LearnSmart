@@ -28,6 +28,8 @@ export interface CreditsState {
   getSessionTimeLimit: () => number;
   startSession: () => void;
   endSession: () => void;
+  addCredits: (amount: number) => void;
+  useCredits: (amount: number) => boolean;
 }
 
 const DAILY_SESSION_LIMIT = 90; // 90 minutes for free tier
@@ -165,6 +167,19 @@ export const useCreditsStore = create<CreditsState>()(
           }
         }
         set({ sessionStartTime: null });
+      },
+
+      addCredits: (amount: number) => {
+        set((state) => ({ credits: state.credits + amount }));
+      },
+
+      useCredits: (amount: number) => {
+        const state = get();
+        if (state.credits >= amount) {
+          set({ credits: state.credits - amount });
+          return true;
+        }
+        return false;
       },
     }),
     {

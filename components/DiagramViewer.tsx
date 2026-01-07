@@ -157,6 +157,35 @@ export default function DiagramViewer({
     );
   };
 
+  const renderLegend = () => {
+    if (!diagram.elements || diagram.elements.length === 0) return null;
+
+    const uniqueTypes = Array.from(new Set(diagram.elements.map(el => el.type || 'component')));
+
+    return (
+      <View style={styles.legendContainer}>
+        <Text style={styles.legendTitle}>Legend</Text>
+        <View style={styles.legendItems}>
+          {uniqueTypes.map((type, idx) => (
+            <View key={idx} style={styles.legendItem}>
+              <View style={[styles.legendColor, { backgroundColor: getCategoryColor(type as any) }]} />
+              <Text style={styles.legendText}>{type.charAt(0).toUpperCase() + type.slice(1)}</Text>
+            </View>
+          ))}
+        </View>
+      </View>
+    );
+  };
+
+  const getCategoryColor = (type: DiagramElement['type']) => {
+    switch (type) {
+      case 'component': return COLORS.SAGE_PRIMARY;
+      case 'connector': return COLORS.GOLD_STREAK;
+      case 'annotation': return COLORS.AMBER_GOLD;
+      default: return COLORS.SAGE_PRIMARY;
+    }
+  };
+
   return (
     <View style={styles.container}>
       {diagram.title && (
@@ -180,6 +209,7 @@ export default function DiagramViewer({
         </Animated.View>
       </ScrollView>
 
+      {renderLegend()}
       {renderConnections()}
 
       <InteractiveTooltip
@@ -323,5 +353,36 @@ const styles = StyleSheet.create({
     color: COLORS.FOREST_ACCENT,
     textAlign: 'center',
     marginTop: SPACING.SM,
+  },
+  legendContainer: {
+    marginTop: SPACING.MD,
+    padding: SPACING.SM,
+    backgroundColor: '#fff',
+    borderRadius: RADIUS.SMALL,
+  },
+  legendTitle: {
+    ...TYPOGRAPHY.METADATA,
+    fontWeight: 'bold',
+    marginBottom: SPACING.XS,
+  },
+  legendItems: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  legendItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: SPACING.MD,
+    marginBottom: SPACING.XS,
+  },
+  legendColor: {
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+    marginRight: SPACING.XS,
+  },
+  legendText: {
+    ...TYPOGRAPHY.METADATA,
+    fontSize: 10,
   },
 });

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { View, Text, StyleSheet, Pressable, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useTranslation } from 'react-i18next';
@@ -13,10 +13,13 @@ import RankBadge from '@/components/RankBadge';
 import XPDisplay from '@/components/XPDisplay';
 import StreakDisplay from '@/components/StreakDisplay';
 import SmartCoinDisplay from '@/components/SmartCoinDisplay';
+import GiftCreditsModal from '@/components/GiftCreditsModal';
+import RedeemGiftCode from '@/components/RedeemGiftCode';
 
 export default function Home() {
   const router = useRouter();
   const { t } = useTranslation();
+  const [giftModalVisible, setGiftModalVisible] = useState(false);
 
   const name = useUserStore((state) => state.name);
 
@@ -89,6 +92,15 @@ export default function Home() {
       </View>
 
       <View style={styles.linksRow}>
+        <Pressable style={styles.linkButton} onPress={() => router.push('/(main)/formulas')}>
+          <Text style={styles.linkButtonText}>📐 Formulas</Text>
+        </Pressable>
+        <Pressable style={styles.linkButton} onPress={() => router.push('/(main)/homework')}>
+          <Text style={styles.linkButtonText}>📝 Homework</Text>
+        </Pressable>
+      </View>
+
+      <View style={styles.linksRow}>
         <Pressable style={styles.linkButton} onPress={() => router.push('/(main)/gamification/hub')}>
           <Text style={styles.linkButtonText}>🎮 Hub</Text>
         </Pressable>
@@ -96,6 +108,21 @@ export default function Home() {
           <Text style={styles.linkButtonText}>📅 Calendar</Text>
         </Pressable>
       </View>
+
+      <View style={styles.premiumSection}>
+        <Text style={styles.sectionTitle}>Premium Features</Text>
+        <View style={styles.linksRow}>
+          <Pressable style={[styles.linkButton, styles.giftButton]} onPress={() => setGiftModalVisible(true)}>
+            <Text style={styles.linkButtonText}>🎁 Gift Credits</Text>
+          </Pressable>
+          <Pressable style={[styles.linkButton, styles.historyButton]} onPress={() => router.push('/(main)/gift-credits')}>
+            <Text style={styles.linkButtonText}>📜 Gift History</Text>
+          </Pressable>
+        </View>
+        <RedeemGiftCode />
+      </View>
+
+      <GiftCreditsModal visible={giftModalVisible} onClose={() => setGiftModalVisible(false)} />
 
       <View style={{ height: SPACING.XXL }} />
     </ScrollView>
@@ -235,5 +262,20 @@ const styles = StyleSheet.create({
     ...TYPOGRAPHY.BODY,
     color: '#fff',
     fontWeight: '800',
+  },
+  premiumSection: {
+    marginTop: SPACING.LG,
+    backgroundColor: '#fff',
+    borderRadius: RADIUS.LARGE,
+    padding: SPACING.LG,
+    ...SHADOWS.LIGHT,
+    borderWidth: 2,
+    borderColor: COLORS.GOLD_STREAK + '40',
+  },
+  giftButton: {
+    backgroundColor: COLORS.GOLD_STREAK,
+  },
+  historyButton: {
+    backgroundColor: COLORS.FOREST_ACCENT,
   },
 });

@@ -67,6 +67,33 @@ export const TYPOGRAPHY = {
     opacity: 0.7,
   },
 
+  // Premium styles
+  FORMULA_TITLE: {
+    fontFamily: 'Poppins',
+    fontSize: 28,
+    fontWeight: '700' as const,
+    lineHeight: 36,
+    letterSpacing: -0.5,
+  },
+  FORMULA_BODY: {
+    fontFamily: 'Inter',
+    fontSize: 16,
+    fontWeight: '400' as const,
+    lineHeight: 24,
+  },
+  HOMEWORK_HEADING: {
+    fontFamily: 'Poppins',
+    fontSize: 20,
+    fontWeight: '600' as const,
+    lineHeight: 28,
+  },
+  DERIVATION_STEP: {
+    fontFamily: 'Inter',
+    fontSize: 14,
+    fontWeight: '500' as const,
+    lineHeight: 20,
+  },
+
   // Legacy support for existing code
   TITLE: { fontFamily: 'Poppins', fontSize: 32, fontWeight: '700' as const },
   HEADER: { fontFamily: 'Poppins', fontSize: 24, fontWeight: '600' as const },

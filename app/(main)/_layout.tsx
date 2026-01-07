@@ -38,6 +38,12 @@ export default function MainLayout() {
           }}
         />
         <Tabs.Screen
+          name="search/index"
+          options={{
+            title: 'Search',
+          }}
+        />
+        <Tabs.Screen
           name="lessons"
           options={{
             title: 'Lessons',
