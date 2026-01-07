@@ -73,6 +73,36 @@ export default function MainLayout() {
             href: null,
           }}
         />
+        <Tabs.Screen
+          name="analytics/index"
+          options={{
+            href: null,
+          }}
+        />
+        <Tabs.Screen
+          name="achievements/index"
+          options={{
+            href: null,
+          }}
+        />
+        <Tabs.Screen
+          name="leaderboards/index"
+          options={{
+            href: null,
+          }}
+        />
+        <Tabs.Screen
+          name="notes/index"
+          options={{
+            href: null,
+          }}
+        />
+        <Tabs.Screen
+          name="bookmarks/index"
+          options={{
+            href: null,
+          }}
+        />
       </Tabs>
 
       <SmartFAB onPress={() => setChatOpen(true)} animated={true} />
