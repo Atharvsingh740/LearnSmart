@@ -216,6 +216,30 @@ Your responses should be:
 
     return await this.generateResponseWithFallback(prompt, { maxTokens: 100, temperature: 0.8 });
   }
+
+  async generateHomework(subject: string, topic: string, difficulty: string, count: number, classLevel: string): Promise<string> {
+    const prompt = `You are an expert homework writer for ${subject} at ${classLevel} level.
+Write ${count} problems for ${topic} at ${difficulty} level.
+
+IMPORTANT REQUIREMENTS:
+1. Write like a human teacher, not AI. Use natural language.
+2. Include clear problem statements
+3. Add "Given" and "Find" sections for math/physics
+4. Provide COMPLETE SOLUTIONS with step-by-step explanations
+5. Add helpful tips/shortcuts where applicable
+6. Format nicely with:
+   - Problem number and heading
+   - Clear diagram descriptions (if needed)
+   - Solution with all steps shown
+   - Final answer highlighted
+7. No obvious AI signs. Make it look like a real homework sheet.
+8. Include real-world examples/applications
+9. Add 1-2 follow-up questions for deeper learning
+
+Output format should be clear, professional, printable.`;
+
+    return await this.generateResponseWithFallback(prompt, { maxTokens: 1500, temperature: 0.7 });
+  }
 }
 
 // Create singleton instance
@@ -231,3 +255,6 @@ export const geminiService = new GeminiService({
   maxRetries: 3,
   timeout: 30000,
 });
+
+export const generateHomeworkWithGemini = (subject: string, topic: string, difficulty: string, count: number, classLevel: string) => 
+  geminiService.generateHomework(subject, topic, difficulty, count, classLevel);
